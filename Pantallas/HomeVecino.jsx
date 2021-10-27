@@ -23,11 +23,11 @@ export default function MainScreen({ navigation }) {
       <View style={styles.container}>
         <Text style={styles.text}>Bienvenido Vecino X</Text>
         <ReclamoBar/>
-        <MenuOpcion text='Generar Reclamo' onPress={handleSalir}/>
-        <MenuOpcion text='Consultar Reclamo' onPress={handleSalir}/>
+        <MenuOpcion text='Generar Reclamo'/>
+        <MenuOpcion text='Consultar Reclamo'/>
         <DenunciasBar/>
-        <MenuOpcion text='Generar Denuncia' onPress={handleSalir}/>
-        <MenuOpcion text='Consultar Denuncia' onPress={handleSalir}/>
+        <MenuOpcion text='Generar Denuncia'/>
+        <MenuOpcion text='Consultar Denuncia'/>
         <PromocionBar/>
         <MenuOpcion text='Generar publicación de comercio' onPress={handleGenerarComercio}/>
         <MenuOpcion text='Generar servicio profesional' onPress={handleGenerarServicio}/>

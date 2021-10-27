@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox } from 'react-native';
+import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView } from 'react-native';
 
 import Boton from '../components/Boton';
 
@@ -20,27 +20,29 @@ export default function LoginVecino({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Login usuario</Text>
-        <TextInput
-            style={styles.input}            
-            placeholder="DNI"
-            onChangeText={dni => setDni(dni)}
-        />
-        <TextInput
-            style={styles.input}            
-            placeholder="Clave de acceso"
-            onChangeText={clave => setClave(clave)}
-        />
-        <View style={styles.checkboxContainer}>
-          <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={styles.checkbox}
+        <ScrollView>
+          <Text style={styles.text}>Login usuario</Text>
+          <TextInput
+              style={styles.input}            
+              placeholder="DNI"
+              onChangeText={dni => setDni(dni)}
           />
-          <Text style={styles.label}>Recordarme</Text>
-        </View>
-        <Boton text='Acceder' onPress={handleIngresar}/>
-        <Boton text='¿Olvidó su contraseña?' onPress={handleOlvido}/>
+          <TextInput
+              style={styles.input}            
+              placeholder="Clave de acceso"
+              onChangeText={clave => setClave(clave)}
+          />
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              value={isSelected}
+              onValueChange={setSelection}
+              style={styles.checkbox}
+            />
+            <Text style={styles.label}>Recordarme</Text>
+          </View>
+          <Boton text='Acceder' onPress={handleIngresar}/>
+          <Boton text='¿Olvidó su contraseña?' onPress={handleOlvido}/>
+        </ScrollView>
       </View>
     );
 }
@@ -53,12 +55,13 @@ const styles = StyleSheet.create({
       backgroundColor: '#263238'
     },
     text:{
-        fontSize: 34,
+        fontSize: 20,
         marginBottom: 50,
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        textAlign: 'center',
     },
     input: {
-        width: '80%',
+        width: '100%',
         height: 40,
         margin: 12,
         borderWidth: 1,
@@ -66,7 +69,8 @@ const styles = StyleSheet.create({
         marginBottom: 50,
         backgroundColor:'#FFFFFF',
         textAlign: 'center',
-        color: 'black'
+        color: 'black',
+        alignSelf: 'center',
     },
     checkboxContainer: {
       flexDirection: "row",
@@ -79,4 +83,7 @@ const styles = StyleSheet.create({
       margin: 8,
       color:'white',
     },
+    scroll:{
+
+    }
 });

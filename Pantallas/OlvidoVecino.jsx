@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 20,
         marginBottom: 50,
-        color: '#000000'
+        color: '#FFFFFF'
     },
     input: {
-        width: '80%',
+        width: '50%',
         height: 40,
         margin: 12,
         borderWidth: 1,

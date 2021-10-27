@@ -20,11 +20,11 @@ export default function MainScreen({ navigation }) {
       <View style={styles.container}>
         <Text style={styles.text}>Bienvenido Inspector X</Text>
         <ReclamoBar/>
-        <MenuOpcion text='Generar Reclamo' onPress={handleConsultarPromociones}/>
-        <MenuOpcion text='Consultar Reclamo' onPress={handleConsultarPromociones}/>
+        <MenuOpcion text='Generar Reclamo'/>
+        <MenuOpcion text='Consultar Reclamo'/>
         <DenunciasBar/>
-        <MenuOpcion text='Generar Denuncia' onPress={handleConsultarPromociones}/>
-        <MenuOpcion text='Consultar Denuncia' onPress={handleConsultarPromociones}/>
+        <MenuOpcion text='Generar Denuncia'/>
+        <MenuOpcion text='Consultar Denuncia'/>
         <PromocionBar/>
         <MenuOpcion text='Consulta de promociones' onPress={handleConsultarPromociones}/>
         <BotonSalir text='Salir' onPress={handleSalir}/>
