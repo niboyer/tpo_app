@@ -53,7 +53,6 @@ export default function PublicacionServicio({ navigation }) {
               placeholder="Descripcion"
               onChangeText={descripcion => setDescripcion(descripcion)}
           />
-          <Text style={styles.text}>Adjuntar imágenes (máximo 5)</Text>
           <Boton text='Crear servicio profesional' onPress={handleCrearPublicacion}/>
         </ScrollView>
       </View>

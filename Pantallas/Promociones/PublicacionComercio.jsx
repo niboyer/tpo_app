@@ -33,7 +33,6 @@ export default function PublicacionComercio({ navigation }) {
               placeholder="Descripcion"
               onChangeText={descripcion => setDescripcion(descripcion)}
           />
-          <Text style={styles.text}>Adjuntar imágenes (máximo 5)</Text>
           <TextInput
               style={styles.input}            
               placeholder="Dirección"

@@ -15,6 +15,9 @@ export default function MainScreen({ navigation }) {
     const handleGenerarServicio = () => {
         navigation.navigate('PublicacionServicio');
     }
+    const handleConsultarPromociones = () => {
+        navigation.navigate('ListaComercios');
+    }
     const handleSalir = () => {
         navigation.navigate('MainScreen');
     }
@@ -31,7 +34,7 @@ export default function MainScreen({ navigation }) {
         <PromocionBar/>
         <MenuOpcion text='Generar publicación de comercio' onPress={handleGenerarComercio}/>
         <MenuOpcion text='Generar servicio profesional' onPress={handleGenerarServicio}/>
-        <MenuOpcion text='Consulta de promociones' onPress={handleSalir}/>
+        <MenuOpcion text='Consulta de promociones' onPress={handleConsultarPromociones}/>
         <BotonSalir text='Salir' onPress={handleSalir}/>
       </View>
     );

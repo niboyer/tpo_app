@@ -20,7 +20,10 @@ import ReestablecerPassVecino from './Pantallas/ReestablecerPassVecino';
 import ReestablecerPassInsp from './Pantallas/ReestablecerPassInsp';
 import PublicacionComercio from './Pantallas/Promociones/PublicacionComercio';
 import PublicacionServicio from './Pantallas/Promociones/PublicacionServicio';
-
+import ListaComercios from './Pantallas/Promociones/ListaComercios';
+import ComercioDatos from './Pantallas/Promociones/ComercioDatos';
+import ListaServicios from './Pantallas/Promociones/ListaServicios';
+import ServicioDatos from './Pantallas/Promociones/ServicioDatos';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +48,10 @@ export default function App() {
         <Stack.Screen name="HomeInvitado" component={HomeInvitado}/>
         <Stack.Screen name="PublicacionComercio" component={PublicacionComercio}/>
         <Stack.Screen name="PublicacionServicio" component={PublicacionServicio}/>
+        <Stack.Screen name="ListaComercios" component={ListaComercios}/>
+        <Stack.Screen name="ComercioDatos" component={ComercioDatos}/>
+        <Stack.Screen name="ListaServicios" component={ListaServicios}/>
+        <Stack.Screen name="ServicioDatos" component={ServicioDatos}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
