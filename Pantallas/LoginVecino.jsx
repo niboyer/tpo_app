@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView } from 'react-n
 
 import Boton from '../components/Boton';
 
+import {accesoVecino} from '../Controllers/AccesoVecino.controller';
+
 export default function LoginVecino({ navigation }) {
 
     const [dni, setDni] = useState('');
@@ -12,8 +14,29 @@ export default function LoginVecino({ navigation }) {
 
 
     const handleIngresar= () => {
-       navigation.navigate('HomeVecino');
+        validarAccesoVecino();            
     }
+
+    const validarAccesoVecino = async function () {
+      let datos = {
+          dni: dni,
+          clave: clave
+      }
+      let getLogin = await accesoVecino(datos);
+      if (getLogin.rdo === 200) {
+          //setUsuarioValido(true);
+
+          //guardar en storage los datos del usuario
+          console.log(getLogin.data.loginUser.token)
+          console.log(getLogin.data.loginUser.user.nombre)
+          navigation.navigate('HomeVecino');
+      }
+      if (getLogin.rdo === 401) {
+        console.log(getLogin.mensaje)
+          //alert(getLogin.mensaje)
+      }
+  }
+
     const handleOlvido= () => {
         navigation.navigate('OlvidoVecino');
      }
