@@ -12,10 +12,6 @@ export default function ListaComercios({ navigation }) {
         {name: 'Rodrigo Rojas', hor: '00:00-23:59', rubro: 'Plomero', tel: '1368-5423', mail: 'rr@gmail.com', desc: 'Plomero disponible todo el día', key: '3'},
     ]) 
 
-    const pressHandler = (key) => {
-        navigation.navigate('ServicioDatos');
-    }
-
     const handleComercios = (key) => {
         navigation.navigate('ListaComercios');
     }
@@ -31,7 +27,8 @@ export default function ListaComercios({ navigation }) {
         <FlatList
             data={test}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => pressHandler(item.key)}>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ServicioDatos', {nombre: item.name, horario: item.hor, rubro: item.rubro, telefono: item.tel, mail: item.mail, descripcion: item.desc});}}>
+                <Text style={styles.datos}>{item.name}</Text>
                     <Text style={styles.datos}>Nombre y Apellido: {item.name}</Text>
                     <Text style={styles.datos}>Horarios: {item.hor}</Text>
                     <Text style={styles.datos}>Rubro: {item.rubro}</Text>

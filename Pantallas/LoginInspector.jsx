@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, TextInput, CheckBox} from 'react-native';
 
 import Boton from '../components/Boton';
 
+import {accesoInspector} from '../Controllers/AccesoInspector.controller';
+
 export default function LoginInspector({ navigation }) {
 
     const [legajo, setLegajo] = useState('');
@@ -11,8 +13,29 @@ export default function LoginInspector({ navigation }) {
     const [isSelected, setSelection] = useState(false);
 
     const handleIngresar= () => {
-       navigation.navigate('HomeInspector');
+      validarAccesoInspector();            
     }
+
+    const validarAccesoInspector = async function () {
+      let datos = {
+          legajo: legajo,
+          contraseña: contraseña
+      }
+      let getLogin = await accesoInspector(datos);
+      if (getLogin.rdo === 200) {
+          //setUsuarioValido(true);
+
+          //guardar en storage los datos del usuario
+          console.log(getLogin.data.loginUser.token)
+          console.log(getLogin.data.loginUser.user.nombre)
+          navigation.navigate('HomeVecino');
+      }
+      if (getLogin.rdo === 401) {
+        console.log(getLogin.mensaje)
+          //alert(getLogin.mensaje)
+      }
+    }
+
     const handleOlvido= () => {
         navigation.navigate('OlvidoInspector');
      }

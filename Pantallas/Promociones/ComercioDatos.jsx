@@ -3,8 +3,13 @@ import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView } from 'react-n
 
 import Boton from '../../components/Boton';
 
-export default function DatosComercio({ navigation }) {
+export default function DatosComercio({ route, navigation }) {
 
+    const {nombre} = route.params;
+    const {descripcion} = route.params;
+    const {direccion} = route.params;
+    const {telefono} = route.params;
+    const {mail} = route.params;
 
     const handleVolver= () => {
        navigation.navigate('HomeVecino');
@@ -17,36 +22,32 @@ export default function DatosComercio({ navigation }) {
           <Text style={styles.text}>Nombre:</Text>
           <TextInput
               style={styles.input}            
-              placeholder="Nombre"
-              value="Nombre"
+              value={JSON.stringify(nombre)}
               editable={false}
           />
           <Text style={styles.text}>Descripcion:</Text>
           <TextInput
-              style={styles.input}            
-              placeholder="Descripcion"
-              value="Descripcion"
+              style={styles.input}      
+              value={JSON.stringify(descripcion)}
               editable={false}
+              multiline={true}
           />
           <Text style={styles.text}>Dirección:</Text>
           <TextInput
-              style={styles.input}            
-              placeholder="Dirección"
-              value="Dirección"
+              style={styles.input}      
+              value={JSON.stringify(direccion)}
               editable={false}
           />
           <Text style={styles.text}>Teléfono:</Text>
           <TextInput
-              style={styles.input}            
-              placeholder="Teléfono"
-              value="Teléfono"
+              style={styles.input}        
+              value={JSON.stringify(telefono)}
               editable={false}
           />
           <Text style={styles.text}>Email:</Text>
           <TextInput
-              style={styles.input}            
-              placeholder="Email"
-              value="Email"
+              style={styles.input}   
+              value={JSON.stringify(mail)}
               editable={false}
           />
           <Boton text='Volver al inicio' onPress={handleVolver}/>

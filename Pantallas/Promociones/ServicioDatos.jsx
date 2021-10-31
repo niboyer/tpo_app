@@ -3,10 +3,17 @@ import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView } from 'react-n
 
 import Boton from '../../components/Boton';
 
-export default function DatosServicio({ navigation }) {
+export default function ServicioDatos({ route, navigation }) {
+
+    const {nombre} = route.params;
+    const {horario} = route.params;
+    const {rubro} = route.params;
+    const {telefono} = route.params;
+    const {mail} = route.params;
+    const {descripcion} = route.params;
 
     const handleVolver= () => {
-       navigation.navigate('HomeInvitado');
+       navigation.navigate('HomeVecino');
     }
 
     return (
@@ -16,47 +23,41 @@ export default function DatosServicio({ navigation }) {
           <Text style={styles.text}>Nombre y Apellido:</Text>
           <TextInput
               style={styles.input}            
-              placeholder="Nombre"
-              value="Nombre y Apellido"
+              value={JSON.stringify(nombre)}
               editable={false}
           />
           <Text style={styles.text}>Horarios:</Text>
           <TextInput
               style={styles.input}            
-              placeholder="Horarios"
-              value="Horarios"
+              value={JSON.stringify(horario)}
               editable={false}
           />
           <Text style={styles.text}>Rubro:</Text>
           <TextInput
               style={styles.input}            
-              placeholder="Rubro"
-              value="Rubro"
+              value={JSON.stringify(rubro)}
               editable={false}
           />
           <Text style={styles.text}>Teléfono:</Text>
           <TextInput
               style={styles.input}            
-              placeholder="Teléfono"
-              value="Teléfono"
+              value={JSON.stringify(telefono)}
               editable={false}
           />
           <Text style={styles.text}>Email:</Text>
           <TextInput
               style={styles.input}            
-              placeholder="Email"
-              value="Email"
+              value={JSON.stringify(mail)}
               editable={false}
           />
           <Text style={styles.text}>Descripción:</Text>
           <TextInput
               style={styles.input}            
-              placeholder="Descripcion"
-              value="Descripcion"
+              value={JSON.stringify(descripcion)}
               editable={false}
+              multiline={true}
           />
-          <Text style={styles.text}>Imágenes:</Text>
-          <Boton text='Volver al inicio' onPress={handleIngresar}/>
+          <Boton text='Volver al inicio' onPress={handleVolver}/>
         </ScrollView>
       </View>
     );

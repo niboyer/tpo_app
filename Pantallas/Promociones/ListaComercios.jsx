@@ -12,10 +12,6 @@ export default function ListaComercios({ navigation }) {
         {name: 'Kfc', desc: 'Pollo', dir: 'Av. Cabildo 4456', tel: '9875-4685', mail: 'kfc@gmail.com', key: '3'},
     ]) 
 
-    const pressHandler = (key) => {
-        navigation.navigate('ComercioDatos');
-    }
-
     const handleServicios = (key) => {
         navigation.navigate('ListaServicios');
     }
@@ -31,7 +27,7 @@ export default function ListaComercios({ navigation }) {
         <FlatList
             data={test}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => pressHandler(item.key)}>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {nombre: item.name, descripcion: item.desc, direccion: item.dir, telefono: item.tel, mail: item.mail});}}>
                     <Text style={styles.datos}>{item.name}</Text>
                     <Text style={styles.datos}>{item.desc}</Text>
                     <Text style={styles.datos}>{item.dir}</Text>
