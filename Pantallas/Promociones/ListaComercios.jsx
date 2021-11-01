@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
 
 import Boton from '../../components/Boton';
@@ -6,11 +6,24 @@ import BotonPublicaciones from '../../components/BotonPublicaciones';
 
 export default function ListaComercios({ navigation }) {
     
-    const [test, setTest] = useState([
+    /* const [test, setTest] = useState([
         {name: 'Pizza Hut', desc: 'Las mejores pizzas', dir: 'Av. Cabildo 2145', tel: '4185-7984', mail: 'pizhut@gmail.com', key: '1'},
         {name: 'El club de la milanesa', desc: 'Riquisimas milangas', dir: 'Av. Cabildo 4444', tel: '1234-1235', mail: 'clubmil@gmail.com', key: '2'},
         {name: 'Kfc', desc: 'Pollo', dir: 'Av. Cabildo 4456', tel: '9875-4685', mail: 'kfc@gmail.com', key: '3'},
     ]) 
+ */
+
+    const comerciosURL = "https://mocki.io/v1/d0d1ed0d-f6a2-43dd-82b7-1ff7c847a1b4";
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        fetch(comerciosURL)
+         .then((response) => response.json())
+         .then((json) => setData(json))
+         .catch((error) => alert(error));
+    });
+
 
     const handleServicios = (key) => {
         navigation.navigate('ListaServicios');
@@ -25,13 +38,13 @@ export default function ListaComercios({ navigation }) {
         <Text style={styles.text}>Consulta de promociones</Text>
         <BotonPublicaciones text='Ver servicios' onPress={handleServicios}/>
         <FlatList
-            data={test}
+            data={data}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {nombre: item.name, descripcion: item.desc, direccion: item.dir, telefono: item.tel, mail: item.mail});}}>
-                    <Text style={styles.datos}>{item.name}</Text>
-                    <Text style={styles.datos}>{item.desc}</Text>
-                    <Text style={styles.datos}>{item.dir}</Text>
-                    <Text style={styles.datos}>{item.tel}</Text>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.mail});}}>
+                    <Text style={styles.datos}>{item.nombre}</Text>
+                    <Text style={styles.datos}>{item.descripcion}</Text>
+                    <Text style={styles.datos}>{item.direccion}</Text>
+                    <Text style={styles.datos}>{item.telefono}</Text>
                     <Text style={styles.datos}>{item.mail}</Text>
                 </TouchableOpacity>
             )}

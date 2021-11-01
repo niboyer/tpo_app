@@ -13,7 +13,8 @@ export default function LoginInspector({ navigation }) {
     const [isSelected, setSelection] = useState(false);
 
     const handleIngresar= () => {
-      validarAccesoInspector();            
+      //validarAccesoInspector();
+      navigation.navigate('HomeVecino');         
     }
 
     const validarAccesoInspector = async function () {
