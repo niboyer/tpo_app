@@ -1,10 +1,10 @@
 
 export const accesoInspector =  async function(usuario){
 
-    let url = 'http://192.168.42.1:8080/api/usuarios/accederInspector'
+    let url = 'http://192.168.42.1:8080/api/personal/accederPersonal'
     
     let usuarioAcceso = {
-        documento: usuario.legajo,
+        legajo: usuario.legajo,
         password: usuario.contraseña
     }
     
@@ -23,7 +23,7 @@ export const accesoInspector =  async function(usuario){
     
     let rdo = response.status;
     let data = await response.json();
-    
+
     switch(rdo)
     {
         case 200:

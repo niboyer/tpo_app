@@ -13,8 +13,8 @@ export default function LoginInspector({ navigation }) {
     const [isSelected, setSelection] = useState(false);
 
     const handleIngresar= () => {
-      //validarAccesoInspector();
-      navigation.navigate('HomeVecino');         
+      validarAccesoInspector();
+      //navigation.navigate('HomeVecino');         
     }
 
     const validarAccesoInspector = async function () {
@@ -28,8 +28,8 @@ export default function LoginInspector({ navigation }) {
 
           //guardar en storage los datos del usuario
           console.log(getLogin.data.loginUser.token)
-          console.log(getLogin.data.loginUser.user.nombre)
-          navigation.navigate('HomeVecino');
+          console.log(getLogin.data.loginUser.personal.nombre)
+          navigation.navigate('HomeInspector');
       }
       if (getLogin.rdo === 401) {
         console.log(getLogin.mensaje)

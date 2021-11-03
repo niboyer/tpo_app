@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
 
 import Boton from '../../components/Boton';
@@ -6,11 +6,31 @@ import BotonPublicaciones from '../../components/BotonPublicaciones';
 
 export default function ListaComercios({ navigation }) {
     
-    const [test, setTest] = useState([
-        {name: 'Carlos Morales', hor: '08:00-20:00', rubro: 'Técnico', tel: '1212-3333', mail: 'cmorales@gmail.com', desc: 'Servicio profesional de electricidad y gasista', key: '1'},
-        {name: 'Mariana Ortiz', hor: '06:00-18:00', rubro: 'Niñera', tel: '5648-8456', mail: 'ortizmariana@gmail.com', desc: 'Serivicio de niñera', key: '2'},
-        {name: 'Rodrigo Rojas', hor: '00:00-23:59', rubro: 'Plomero', tel: '1368-5423', mail: 'rr@gmail.com', desc: 'Plomero disponible todo el día', key: '3'},
-    ]) 
+    let url = 'http://192.168.42.1:8080/api/promociones/getPromocionesByTipo'
+    const [data, setData] = useState([]);
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+    "tipo": "Servicio"
+    });
+
+    var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+    };
+
+    useEffect(() => {
+        fetch(url,requestOptions)
+         .then((response) => response.json())
+         .then((json) => setData(json._promociones))
+         .catch((error) => alert(error));
+    });
+    
+    
 
     const handleComercios = (key) => {
         navigation.navigate('ListaComercios');
@@ -25,16 +45,16 @@ export default function ListaComercios({ navigation }) {
         <Text style={styles.text}>Consulta de promociones</Text>
         <BotonPublicaciones text='Ver comercios' onPress={handleComercios}/>
         <FlatList
-            data={test}
+            data={data}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ServicioDatos', {nombre: item.name, horario: item.hor, rubro: item.rubro, telefono: item.tel, mail: item.mail, descripcion: item.desc});}}>
-                <Text style={styles.datos}>{item.name}</Text>
-                    <Text style={styles.datos}>Nombre y Apellido: {item.name}</Text>
-                    <Text style={styles.datos}>Horarios: {item.hor}</Text>
-                    <Text style={styles.datos}>Rubro: {item.rubro}</Text>
-                    <Text style={styles.datos}>Teléfono: {item.tel}</Text>
-                    <Text style={styles.datos}>Email: {item.mail}</Text>
-                    <Text style={styles.datos}>Descripción: {item.desc}</Text>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ServicioDatos', {nombre: item.nombre, horario: item.horarios, rubro: item.rubros, telefono: item.telefono, mail: item.email, descripcion: item.descripcion});}}>
+                    <Text style={styles.datos}>{item.name}</Text>
+                    <Text style={styles.datos}>Nombre y Apellido: {item.nombre}</Text>
+                    <Text style={styles.datos}>Horarios: {item.horarios}</Text>
+                    <Text style={styles.datos}>Rubro: {item.rubros}</Text>
+                    <Text style={styles.datos}>Teléfono: {item.telefono}</Text>
+                    <Text style={styles.datos}>Email: {item.email}</Text>
+                    <Text style={styles.datos}>Descripción: {item.descripcion}</Text>
                 </TouchableOpacity>
             )}
         />

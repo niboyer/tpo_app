@@ -14,13 +14,27 @@ export default function ListaComercios({ navigation }) {
  */
 
     const comerciosURL = "https://mocki.io/v1/d0d1ed0d-f6a2-43dd-82b7-1ff7c847a1b4";
-
+    let url = 'http://192.168.42.1:8080/api/promociones/getPromocionesByTipo'
     const [data, setData] = useState([]);
 
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+    "tipo": "Comercio"
+    });
+
+    var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+    };
+
     useEffect(() => {
-        fetch(comerciosURL)
+        fetch(url,requestOptions)
          .then((response) => response.json())
-         .then((json) => setData(json))
+         .then((json) => setData(json._promociones))
          .catch((error) => alert(error));
     });
 

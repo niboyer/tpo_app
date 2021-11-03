@@ -8,7 +8,7 @@ import BotonSalir from '../components/BotonSalir';
 export default function MainScreen({ navigation }) {
     
     const handleConsultarPromociones = () => {
-        navigation.navigate('MainScreen');
+        navigation.navigate('ListaComercios');
     }
     const handleSalir = () => {
         navigation.navigate('MainScreen');
