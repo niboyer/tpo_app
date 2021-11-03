@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, Alert } from 'react-native';
 
 import Boton from '../components/Boton';
 
@@ -32,8 +32,8 @@ export default function LoginVecino({ navigation }) {
           navigation.navigate('HomeVecino');
       }
       if (getLogin.rdo === 401) {
-        console.log(getLogin.mensaje)
-          //alert(getLogin.mensaje)
+        //console.log(getLogin.mensaje)
+        Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
       }
   }
 
@@ -106,7 +106,4 @@ const styles = StyleSheet.create({
       margin: 8,
       color:'white',
     },
-    scroll:{
-
-    }
 });

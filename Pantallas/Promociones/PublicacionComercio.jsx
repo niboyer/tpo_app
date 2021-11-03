@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView } from 'react-native';
 
 import Boton from '../../components/Boton';
+import { crearComercio } from '../../Controllers/Comercios.controller';
 
 export default function PublicacionComercio({ navigation }) {
 
@@ -15,7 +16,24 @@ export default function PublicacionComercio({ navigation }) {
 
 
     const handleCrearPublicacion= () => {
-       navigation.navigate('HomeVecino');
+      //crearPublicacionComercio();
+      navigation.navigate('HomeVecino');
+    }
+
+    const crearPublicacionComercio = async function () {
+      let datos = {
+        nombre: nombre,
+        descripcion: descripcion,
+        direccion: direccion,
+        telefono: telefono,
+        email: email,
+        horario: horario,
+        tipoServicio: 'Comercio'
+      }
+      let getRespuesta = await crearComercio(datos);
+      if(getRespuesta.rdo === 200){
+        navigation.navigate('HomeVecino');
+      }
     }
 
     return (

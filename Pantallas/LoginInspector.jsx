@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox} from 'react-native';
+import { StyleSheet, View, Text, TextInput, ScrollView, CheckBox} from 'react-native';
 
 import Boton from '../components/Boton';
 
@@ -43,27 +43,29 @@ export default function LoginInspector({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Login inspector</Text>
-        <TextInput
-            style={styles.input}            
-            placeholder="Legajo inspector"
-            onChangeText={legajo => setLegajo(legajo)}
-        />
-        <TextInput
-            style={styles.input}            
-            placeholder="Contraseña"
-            onChangeText={contraseña => setContraseña(contraseña)}
-        />
-        <View style={styles.checkboxContainer}>
-          <CheckBox
-            value={isSelected}
-            onValueChange={setSelection}
-            style={styles.checkbox}
+        <ScrollView>
+          <Text style={styles.text}>Login inspector</Text>
+          <TextInput
+              style={styles.input}            
+              placeholder="Legajo inspector"
+              onChangeText={legajo => setLegajo(legajo)}
           />
-          <Text style={styles.label}>Recordarme</Text>
-        </View>
-        <Boton text='Acceder' onPress={handleIngresar}/>
-        <Boton text='¿Olvidó su contraseña?' onPress={handleOlvido}/>
+          <TextInput
+              style={styles.input}            
+              placeholder="Contraseña"
+              onChangeText={contraseña => setContraseña(contraseña)}
+          />
+          <View style={styles.checkboxContainer}>
+            <CheckBox
+              value={isSelected}
+              onValueChange={setSelection}
+              style={styles.checkbox}
+            />
+            <Text style={styles.label}>Recordarme</Text>
+          </View>
+          <Boton text='Acceder' onPress={handleIngresar}/>
+          <Boton text='¿Olvidó su contraseña?' onPress={handleOlvido}/>
+        </ScrollView>
       </View>
     );
 }
@@ -76,12 +78,13 @@ const styles = StyleSheet.create({
       backgroundColor: '#263238'
     },  
     text:{
-        fontSize: 34,
+        fontSize: 20,
         marginBottom: 50,
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        textAlign: 'center',
     },
     input: {
-        width: '80%',
+        width: '100%',
         height: 40,
         margin: 12,
         borderWidth: 1,

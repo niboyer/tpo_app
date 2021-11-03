@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView } from 'react-native';
 
 import Boton from '../../components/Boton';
+import { crearServicio } from '../../Controllers/Servicios.controller';
 
 export default function PublicacionServicio({ navigation }) {
 
@@ -13,10 +14,27 @@ export default function PublicacionServicio({ navigation }) {
     const [email, setEmail] = useState('');
 
 
-
     const handleCrearPublicacion= () => {
+      //crearPublicacionServicio();
        navigation.navigate('HomeVecino');
     }
+
+    const crearPublicacionServicio = async function () {
+      let datos = {
+        nombre: nombre,
+        descripcion: descripcion,
+        rubro: rubro,
+        horario: horario,
+        telefono: telefono,
+        email: email,
+        tipoServicio: 'Servicio'
+      }
+      let getRespuesta = await crearServicio(datos);
+      if(getRespuesta.rdo === 200){
+        navigation.navigate('HomeVecino');
+      }
+    }
+
 
     return (
       <View style={styles.container}>
