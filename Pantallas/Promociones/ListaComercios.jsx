@@ -54,12 +54,12 @@ export default function ListaComercios({ navigation }) {
         <FlatList
             data={data}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.mail});}}>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.email});}}>
                     <Text style={styles.datos}>{item.nombre}</Text>
                     <Text style={styles.datos}>{item.descripcion}</Text>
                     <Text style={styles.datos}>{item.direccion}</Text>
                     <Text style={styles.datos}>{item.telefono}</Text>
-                    <Text style={styles.datos}>{item.mail}</Text>
+                    <Text style={styles.datos}>{item.email}</Text>
                 </TouchableOpacity>
             )}
         />
