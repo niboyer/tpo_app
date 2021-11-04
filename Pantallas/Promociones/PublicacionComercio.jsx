@@ -99,7 +99,7 @@ export default function PublicacionComercio({ navigation }) {
               onChangeText={email => setEmail(email)}
           />
           <TouchableOpacity onPress={openImagePickerAsync}>
-            <Text>Pick a photo</Text>
+            <Text>Seleccionar Imagen</Text>
           </TouchableOpacity>
 
           <Image key={files} style={{ width: 200, height: 200 }} source={{ uri: files }} />

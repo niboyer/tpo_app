@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, Switch, Button } from 'react-native';
 
 import Boton from '../components/Boton';
+import { solicitarAcceso } from '../Controllers/AccesoVecino.controller';
 
 export default function DatosCrear({ navigation }) {
 
@@ -10,8 +11,31 @@ export default function DatosCrear({ navigation }) {
     const [dni, setDni] = useState('');
     const [email, setEmail] = useState('');
 
+    const solicitarAccesoVecino = async function () {
+      let datos = {
+          documento: dni,
+          nombre: nombre,
+          apellido: apellido,
+          email:email,
+      }
+      let getLogin = await solicitarAcceso(datos);
+      if (getLogin.rdo === 200) {
+          //setUsuarioValido(true);
+
+          //guardar en storage los datos del usuario
+          //console.log(getLogin.data.loginUser.token)
+          //console.log(getLogin.data.loginUser.user.nombre)
+          navigation.navigate('PantallaDatos');
+      }
+      if (getLogin.rdo === 401) {
+        //console.log(getLogin.mensaje)
+        Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
+      }
+  }
+
     const handleEnviar = () => {
-       navigation.navigate('PantallaDatos');
+      solicitarAccesoVecino();
+       //navigation.navigate('PantallaDatos');
     }
 
     return (
@@ -50,7 +74,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#263238'
     },
     text:{
-        fontSize: 34,
+        fontSize: 20,
         marginBottom: 50,
         color: '#FFFFFF'
     },

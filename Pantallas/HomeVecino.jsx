@@ -24,7 +24,7 @@ export default function MainScreen({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Bienvenido Vecino X</Text>
+        <Text style={styles.text}>Bienvenido Vecino</Text>
         <ReclamoBar/>
         <MenuOpcion text='Generar Reclamo'/>
         <MenuOpcion text='Consultar Reclamo'/>

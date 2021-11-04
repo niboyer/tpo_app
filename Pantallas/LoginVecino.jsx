@@ -51,7 +51,8 @@ export default function LoginVecino({ navigation }) {
               onChangeText={dni => setDni(dni)}
           />
           <TextInput
-              style={styles.input}            
+              style={styles.input}
+              secureTextEntry            
               placeholder="Clave de acceso"
               onChangeText={clave => setClave(clave)}
           />

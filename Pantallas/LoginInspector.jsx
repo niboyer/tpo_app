@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, ScrollView, CheckBox} from 'react-native';
+import { StyleSheet, View, Text, TextInput, ScrollView, CheckBox, Alert} from 'react-native';
 
 import Boton from '../components/Boton';
 
@@ -32,8 +32,7 @@ export default function LoginInspector({ navigation }) {
           navigation.navigate('HomeInspector');
       }
       if (getLogin.rdo === 401) {
-        console.log(getLogin.mensaje)
-          //alert(getLogin.mensaje)
+        Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
       }
     }
 
@@ -51,7 +50,8 @@ export default function LoginInspector({ navigation }) {
               onChangeText={legajo => setLegajo(legajo)}
           />
           <TextInput
-              style={styles.input}            
+              style={styles.input} 
+              secureTextEntry           
               placeholder="Contraseña"
               onChangeText={contraseña => setContraseña(contraseña)}
           />

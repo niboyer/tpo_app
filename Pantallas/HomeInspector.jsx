@@ -18,7 +18,7 @@ export default function MainScreen({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Bienvenido Inspector X</Text>
+        <Text style={styles.text}>Bienvenido Inspector</Text>
         <ReclamoBar/>
         <MenuOpcion text='Generar Reclamo'/>
         <MenuOpcion text='Consultar Reclamo'/>
