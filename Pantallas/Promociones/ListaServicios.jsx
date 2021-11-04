@@ -3,41 +3,26 @@ import { StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native'
 
 import Boton from '../../components/Boton';
 import BotonPublicaciones from '../../components/BotonPublicaciones';
+import { getPublicacionesByTipo } from '../../Controllers/Publicaciones.controller';
 
 export default function ListaComercios({ navigation }) {
     
-    let url = 'http://192.168.42.1:8080/api/promociones/getPromocionesByTipo'
     const [data, setData] = useState([]);
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-    "tipo": "Servicio"
-    });
-
-    var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: raw,
-    redirect: 'follow'
-    };
-
-    useEffect(() => {
-        fetch(url,requestOptions)
-         .then((response) => response.json())
-         .then((json) => setData(json._promociones))
-         .catch((error) => alert(error));
-    });
+    useEffect(()=>{
+        async function componentDidMount(){
+            let rdo = await getPublicacionesByTipo('Servicio');
+            setData(rdo);
+        }
+        componentDidMount();
+    }, []);
     
-    
-
     const handleComercios = (key) => {
         navigation.navigate('ListaComercios');
     }
 
     const handleSalir = () => {
-        navigation.navigate('HomeVecino');
+        navigation.goBack()
     }
 
     return (
@@ -47,7 +32,7 @@ export default function ListaComercios({ navigation }) {
         <FlatList
             data={data}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ServicioDatos', {nombre: item.nombre, horario: item.horarios, rubro: item.rubros, telefono: item.telefono, mail: item.email, descripcion: item.descripcion});}}>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ServicioDatos', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', nombre: item.nombre, horario: item.horarios, rubro: item.rubros, telefono: item.telefono, mail: item.email, descripcion: item.descripcion});}}>
                     <Text style={styles.datos}>{item.name}</Text>
                     <Text style={styles.datos}>Nombre y Apellido: {item.nombre}</Text>
                     <Text style={styles.datos}>Horarios: {item.horarios}</Text>
@@ -57,6 +42,7 @@ export default function ListaComercios({ navigation }) {
                     <Text style={styles.datos}>Descripción: {item.descripcion}</Text>
                 </TouchableOpacity>
             )}
+            keyExtractor={(item) => item.idPublicacion}
         />
         <Boton text='Volver al inicio' onPress={handleSalir}/>
       </View>

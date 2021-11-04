@@ -3,48 +3,26 @@ import { StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native'
 
 import Boton from '../../components/Boton';
 import BotonPublicaciones from '../../components/BotonPublicaciones';
+import { getPublicacionesByTipo } from '../../Controllers/Publicaciones.controller';
 
 export default function ListaComercios({ navigation }) {
     
-    /* const [test, setTest] = useState([
-        {name: 'Pizza Hut', desc: 'Las mejores pizzas', dir: 'Av. Cabildo 2145', tel: '4185-7984', mail: 'pizhut@gmail.com', key: '1'},
-        {name: 'El club de la milanesa', desc: 'Riquisimas milangas', dir: 'Av. Cabildo 4444', tel: '1234-1235', mail: 'clubmil@gmail.com', key: '2'},
-        {name: 'Kfc', desc: 'Pollo', dir: 'Av. Cabildo 4456', tel: '9875-4685', mail: 'kfc@gmail.com', key: '3'},
-    ]) 
- */
-
-    const comerciosURL = "https://mocki.io/v1/d0d1ed0d-f6a2-43dd-82b7-1ff7c847a1b4";
-    let url = 'http://192.168.42.1:8080/api/promociones/getPromocionesByTipo'
     const [data, setData] = useState([]);
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    var raw = JSON.stringify({
-    "tipo": "Comercio"
-    });
-
-    var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: raw,
-    redirect: 'follow'
-    };
-
-    useEffect(() => {
-        fetch(url,requestOptions)
-         .then((response) => response.json())
-         .then((json) => setData(json._promociones))
-         .catch((error) => alert(error));
-    });
-
+    useEffect(()=>{
+        async function componentDidMount(){
+            let rdo = await getPublicacionesByTipo('Comercio');
+            setData(rdo);
+        }
+        componentDidMount();
+    }, []);
 
     const handleServicios = (key) => {
         navigation.navigate('ListaServicios');
     }
 
     const handleSalir = () => {
-        navigation.navigate('HomeVecino');
+        navigation.goBack()
     }
 
     return (
@@ -54,7 +32,7 @@ export default function ListaComercios({ navigation }) {
         <FlatList
             data={data}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.email});}}>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {rlImagenes: item.urlImagenes ? item.urlImagenes : '', nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.email});}}>
                     <Text style={styles.datos}>{item.nombre}</Text>
                     <Text style={styles.datos}>{item.descripcion}</Text>
                     <Text style={styles.datos}>{item.direccion}</Text>
@@ -62,6 +40,7 @@ export default function ListaComercios({ navigation }) {
                     <Text style={styles.datos}>{item.email}</Text>
                 </TouchableOpacity>
             )}
+            keyExtractor={(item) => item.idPublicacion}
         />
         <Boton text='Volver al inicio' onPress={handleSalir}/>
       </View>

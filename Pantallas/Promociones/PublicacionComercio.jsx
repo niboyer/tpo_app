@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpacity, Image } from 'react-native';
 
+import * as ImagePicker from 'expo-image-picker';
 import Boton from '../../components/Boton';
 import { crearComercio } from '../../Controllers/Comercios.controller';
+import { createPublicacionByTipo } from '../../Controllers/Publicaciones.controller';
 
 export default function PublicacionComercio({ navigation }) {
 
@@ -13,11 +15,27 @@ export default function PublicacionComercio({ navigation }) {
     const [email, setEmail] = useState('');
     const [horario, setHorario] = useState('');
 
+    const [fileNames, setFileNames] = useState([]);
+    const [files, setFiles] = useState([]);
+    let fileList = [];
 
+    const addFile = e => {
+      let fileNames = [];
+      let files = e.target.files;
+      for (let i = 0; i < e.target.files.length; i++) {
+          let archivoOrig = e.target.files[i].name;
+          let posExt = archivoOrig.indexOf('.');
+          let extension = archivoOrig.substring(posExt, archivoOrig.length);
+          let aleatorio = Math.random().toString().substring(2, 15);
+          fileNames.push("Img_" + aleatorio + extension);
+      }
+      setFiles(files);
+      setFileNames(fileNames);
+  };
 
     const handleCrearPublicacion= () => {
-      //crearPublicacionComercio();
-      navigation.navigate('HomeVecino');
+      crearPublicacionComercio();
+      //navigation.navigate('HomeVecino');
     }
 
     const crearPublicacionComercio = async function () {
@@ -28,11 +46,30 @@ export default function PublicacionComercio({ navigation }) {
         telefono: telefono,
         email: email,
         horario: horario,
-        tipoServicio: 'Comercio'
+        tipoPublicacion: 'Comercio',
+        nombreImagenes: fileNames,
+        archivoImagenes: files
       }
-      let getRespuesta = await crearComercio(datos);
-      if(getRespuesta.rdo === 200){
+      let getRespuesta = await createPublicacionByTipo(datos);
+      if(getRespuesta.rdo === 0){
         navigation.navigate('HomeVecino');
+      }
+    }
+
+    let openImagePickerAsync = async () => {
+      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+      if (permissionResult.granted === false) {
+        alert("Permission to access camera roll is required!");
+        return;
+      }
+  
+      let pickerResult = await ImagePicker.launchImageLibraryAsync();
+      console.log(pickerResult.uri);
+      console.log(files)
+      if (!pickerResult.cancelled) {
+        fileList.push(pickerResult.uri);
+        setFiles(pickerResult.uri);
       }
     }
 
@@ -71,6 +108,21 @@ export default function PublicacionComercio({ navigation }) {
               placeholder="Email"
               onChangeText={email => setEmail(email)}
           />
+          <TouchableOpacity onPress={openImagePickerAsync}>
+            <Text>Pick a photo</Text>
+          </TouchableOpacity>
+
+          {fileList.map(url =>{
+            
+            if(url!=='')
+            {return(
+                
+                    <Image key={url} style={{ width: 200, height: 200 }} source={{ uri: url }} />
+                
+            );}
+          })}
+
+          
           <Boton text='Crear publicación' onPress={handleCrearPublicacion}/>
         </ScrollView>
       </View>
