@@ -13,6 +13,7 @@ export default function ListaComercios({ navigation }) {
         async function componentDidMount(){
             let rdo = await getPublicacionesByTipo('Comercio');
             setData(rdo);
+            console.log(rdo)
         }
         componentDidMount();
     }, []);
@@ -32,7 +33,7 @@ export default function ListaComercios({ navigation }) {
         <FlatList
             data={data}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {rlImagenes: item.urlImagenes ? item.urlImagenes : '', nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.email});}}>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.email});}}>
                     <Text style={styles.datos}>{item.nombre}</Text>
                     <Text style={styles.datos}>{item.descripcion}</Text>
                     <Text style={styles.datos}>{item.direccion}</Text>

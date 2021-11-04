@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpacity, Image } from 'react-native';
 
+import * as ImagePicker from 'expo-image-picker';
 import Boton from '../../components/Boton';
-import { crearServicio } from '../../Controllers/Servicios.controller';
+import { createPublicacionByTipo } from '../../Controllers/Publicaciones.controller';
 
 export default function PublicacionServicio({ navigation }) {
 
@@ -13,29 +14,49 @@ export default function PublicacionServicio({ navigation }) {
     const [telefono, setTelefono] = useState('');
     const [email, setEmail] = useState('');
 
+    const [fileNames, setFileNames] = useState(null);
+    const [files, setFiles] = useState(null);
 
     const handleCrearPublicacion= () => {
-      //crearPublicacionServicio();
-       navigation.navigate('HomeVecino');
+        crearPublicacionServicio();
     }
 
     const crearPublicacionServicio = async function () {
       let datos = {
         nombre: nombre,
         descripcion: descripcion,
-        rubro: rubro,
-        horario: horario,
+        rubros: rubro,
+        horarios: horario,
         telefono: telefono,
         email: email,
-        tipoServicio: 'Servicio'
+        tipoPublicacion: 'Servicio',
+        nombreImagenes: fileNames,
+        archivoImagenes: files
       }
-      let getRespuesta = await crearServicio(datos);
-      if(getRespuesta.rdo === 200){
+      let getRespuesta = await createPublicacionByTipo(datos);
+      if(getRespuesta.rdo === 0){
         navigation.navigate('HomeVecino');
       }
     }
 
+    let openImagePickerAsync = async () => {
+      let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  
+      if (permissionResult.granted === false) {
+        alert("Permission to access camera roll is required!");
+        return;
+      }
+  
+      let pickerResult = await ImagePicker.launchImageLibraryAsync();
+      if (!pickerResult.cancelled) {
+        setFiles(pickerResult.uri);
 
+        var n = pickerResult.uri.lastIndexOf('/');
+        var result = pickerResult.uri.substring(n + 1);
+
+        setFileNames(result)
+      }
+    }
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -71,6 +92,12 @@ export default function PublicacionServicio({ navigation }) {
               placeholder="Descripcion"
               onChangeText={descripcion => setDescripcion(descripcion)}
           />
+          <TouchableOpacity onPress={openImagePickerAsync}>
+            <Text>Seleccionar Imagen</Text>
+          </TouchableOpacity>
+
+          <Image key={files} style={{ width: 200, height: 200 }} source={{ uri: files }} />
+
           <Boton text='Crear servicio profesional' onPress={handleCrearPublicacion}/>
         </ScrollView>
       </View>

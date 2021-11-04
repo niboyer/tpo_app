@@ -3,7 +3,6 @@ import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpaci
 
 import * as ImagePicker from 'expo-image-picker';
 import Boton from '../../components/Boton';
-import { crearComercio } from '../../Controllers/Comercios.controller';
 import { createPublicacionByTipo } from '../../Controllers/Publicaciones.controller';
 
 export default function PublicacionComercio({ navigation }) {
@@ -15,23 +14,10 @@ export default function PublicacionComercio({ navigation }) {
     const [email, setEmail] = useState('');
     const [horario, setHorario] = useState('');
 
-    const [fileNames, setFileNames] = useState([]);
-    const [files, setFiles] = useState([]);
-    let fileList = [];
+    const [fileNames, setFileNames] = useState(null);
+    const [files, setFiles] = useState(null);
 
-    const addFile = e => {
-      let fileNames = [];
-      let files = e.target.files;
-      for (let i = 0; i < e.target.files.length; i++) {
-          let archivoOrig = e.target.files[i].name;
-          let posExt = archivoOrig.indexOf('.');
-          let extension = archivoOrig.substring(posExt, archivoOrig.length);
-          let aleatorio = Math.random().toString().substring(2, 15);
-          fileNames.push("Img_" + aleatorio + extension);
-      }
-      setFiles(files);
-      setFileNames(fileNames);
-  };
+    
 
     const handleCrearPublicacion= () => {
       crearPublicacionComercio();
@@ -45,7 +31,7 @@ export default function PublicacionComercio({ navigation }) {
         direccion: direccion,
         telefono: telefono,
         email: email,
-        horario: horario,
+        horarios: horario,
         tipoPublicacion: 'Comercio',
         nombreImagenes: fileNames,
         archivoImagenes: files
@@ -68,8 +54,12 @@ export default function PublicacionComercio({ navigation }) {
       console.log(pickerResult.uri);
       console.log(files)
       if (!pickerResult.cancelled) {
-        fileList.push(pickerResult.uri);
         setFiles(pickerResult.uri);
+
+        var n = pickerResult.uri.lastIndexOf('/');
+        var result = pickerResult.uri.substring(n + 1);
+
+        setFileNames(result)
       }
     }
 
@@ -112,15 +102,8 @@ export default function PublicacionComercio({ navigation }) {
             <Text>Pick a photo</Text>
           </TouchableOpacity>
 
-          {fileList.map(url =>{
-            
-            if(url!=='')
-            {return(
-                
-                    <Image key={url} style={{ width: 200, height: 200 }} source={{ uri: url }} />
-                
-            );}
-          })}
+          <Image key={files} style={{ width: 200, height: 200 }} source={{ uri: files }} />
+         
 
           
           <Boton text='Crear publicación' onPress={handleCrearPublicacion}/>

@@ -42,7 +42,13 @@ export const createPublicacionByTipo = async function (publicacion) {
     formData.append("email", publicacion.email);
     formData.append("tipoPublicacion", publicacion.tipoPublicacion);
 
-    if (publicacion.archivoImagenes !== null) {
+    formData.append('files', {  
+        uri: publicacion.archivoImagenes,
+        name: publicacion.nombreImagenes,
+        type: 'image/jpg'
+      })
+      
+    /*if (publicacion.archivoImagenes !== null) {
         if (publicacion.archivoImagenes.length !== undefined) {
             for (let i = 0; i < publicacion.archivoImagenes.length; i++) {
                 formData.append('files', publicacion.archivoImagenes[i], publicacion.nombreImagenes[i])
@@ -50,7 +56,7 @@ export const createPublicacionByTipo = async function (publicacion) {
         } else {
             formData.append('files', publicacion.archivoImagenes[0], publicacion.nombreImagenes[0])
         }
-    }
+    }*/
 
     try {
         let response = await fetch(url, {
