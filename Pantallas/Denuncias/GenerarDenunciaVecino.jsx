@@ -4,40 +4,37 @@ import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpaci
 import * as ImagePicker from 'expo-image-picker';
 import Boton from '../../components/Boton';
 
-export default function GenerarReclamo({ navigation }) {
+export default function GenerarDenunciaVecino({ navigation }) {
 
+    const [apellido, setApellido] = useState('');
+    const [nombre, setNombre] = useState('');
     const [dir1, setDir1] = useState('');
     const [dir2, setDir2] = useState('');
-    const [tipo, setTipo] = useState('');
+    const [motivo, setMotivo] = useState('');
     const [descripcion, setDescripcion] = useState('');
 
     const [fileNames, setFileNames] = useState(null);
     const [files, setFiles] = useState(null);
 
-    const wifi = false;
-
-    const handleCrearReclamo= () => {
-      if(wifi == true){
-        navigation.navigate('DevolucionNro');
-      }
-      else{
-        navigation.navigate('EnviarRed');
-      }
+    const handleCrearDenuncia= () => {
+      navigation.navigate('DeclaracionJurada');
     }
 
     /*
-    const handleCrearReclamo = async function () {
+    const handleCrearDenunciaVecino = async function () {
       let datos = {
+        apellido: apellido,
+        nombre: nombre,
         dir1: dir1,
         dir2: dir2,
-        tipo: tipo,
+        motivo: motivo,
         descripcion: descripcion,
         nombreImagenes: fileNames,
         archivoImagenes: files
       }
-      let getRespuesta = await createReclamo(datos);
+      let getRespuesta = await createDenunciaByTipo(datos);
       if(getRespuesta.rdo === 0){
-        navigation.navigate('DevolucionNro');
+        navigation.navigate('DeclaracionJurada');
       }
     }
 
@@ -66,7 +63,17 @@ export default function GenerarReclamo({ navigation }) {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.text}>Datos de su reclamo:</Text>
+          <Text style={styles.text}>Denuncia contra: Vecino</Text>
+          <TextInput
+              style={styles.input}            
+              placeholder="Apellido del denunciado"
+              onChangeText={apellido => setApellido(apellido)}
+          />
+          <TextInput
+              style={styles.input}            
+              placeholder="Nombre del denunciado"
+              onChangeText={nombre => setNombre(nombre)}
+          />
           <TextInput
               style={styles.input}            
               placeholder="Dirección 1"
@@ -77,10 +84,11 @@ export default function GenerarReclamo({ navigation }) {
               placeholder="Dirección 2"
               onChangeText={dir2 => setDir2(dir2)}
           />
+          <Text style={styles.text}>Motivo de la denuncia:</Text>
           <TextInput
-              style={styles.input}            
-              placeholder="Tipo"
-              onChangeText={tipo => setTipo(tipo)}
+              style={styles.descripcion}            
+              placeholder="Motivo por el cual realiza la denuncia"
+              onChangeText={motivo => setMotivo(motivo)}
           />
           <Text style={styles.text}>Datos adicionales de su reclamo</Text>
           <TextInput
@@ -94,7 +102,7 @@ export default function GenerarReclamo({ navigation }) {
           <Image key={files} style={{ width: 200, height: 200 }} source={{ uri: files }} />   */}
 
 
-          <Boton text='Enviar reclamo' onPress={handleCrearReclamo}/>
+          <Boton text='Continuar' onPress={handleCrearDenuncia}/>
         </ScrollView>
       </View>
     );

@@ -1,24 +1,29 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox } from 'react-native';
 
-import Boton from '../components/Boton';
+import Boton from '../../components/Boton';
 
-export default function PregVecino({ navigation }) {
+export default function ReestablecerPassVecino({ navigation }) {
 
-    const [respuesta, setRespuesta] = useState('');
+    const [clave, setClave] = useState('');
+    const [confirmar, setConfirmar] = useState('');
 
     const handleContinuar= () => {
-       navigation.navigate('ReestablecerPassVecino');
+       navigation.navigate('LoginVecino');
     }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Para verificar su identidad, responda la siguiente pregunta:</Text>
-        <Text style={styles.pregunta}>Pregunta de seguridad:</Text>
+        <Text style={styles.text}>Reestablecer contraseña usuario</Text>
         <TextInput
             style={styles.input}            
-            placeholder="Respuesta"
-            onChangeText={respuesta => setRespuesta(respuesta)}
+            placeholder="Clave de acceso"
+            onChangeText={clave => setClave(clave)}
+        />
+        <TextInput
+            style={styles.input}            
+            placeholder="Confirmar clave"
+            onChangeText={confirmar => setConfirmar(confirmar)}
         />
         <Boton text='Continuar' onPress={handleContinuar}/>
       </View>
@@ -33,15 +38,9 @@ const styles = StyleSheet.create({
       backgroundColor: '#263238'
     },
     text:{
-        fontSize: 24,
-        marginBottom: 50,
-        color: '#000000',
-        textDecorationLine: 'underline',
-    },
-    pregunta:{
         fontSize: 20,
         marginBottom: 50,
-        color: '#000000',
+        color: '#000000'
     },
     input: {
         width: '80%',

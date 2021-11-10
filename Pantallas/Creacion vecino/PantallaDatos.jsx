@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, Switch, Button } from 'react-native';
 
-import Boton from '../components/Boton';
+import Boton from '../../components/Boton';
 
 export default function PantallaDatos({ navigation }) {
     

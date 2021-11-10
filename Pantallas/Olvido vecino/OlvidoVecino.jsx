@@ -1,24 +1,24 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox } from 'react-native';
 
-import Boton from '../components/Boton';
+import Boton from '../../components/Boton';
 
-export default function OlvidoInspector({ navigation }) {
+export default function OlvidoVecino({ navigation }) {
 
-    const [legajo, setLegajo] = useState('');
+    const [dni, setDni] = useState('');
     const [email, setEmail] = useState('');
 
     const handleContinuar= () => {
-       navigation.navigate('PregInspector');
+       navigation.navigate('PregVecino');
     }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Ingrese su legajo de inspector</Text>
+        <Text style={styles.text}>Ingrese su número de documento</Text>
         <TextInput
             style={styles.input}            
-            placeholder="Legajo"
-            onChangeText={legajo => setLegajo(legajo)}
+            placeholder="DNI"
+            onChangeText={dni => setDni(dni)}
         />
         <Text style={styles.text}>Ingrese su correo electrónico</Text>
         <TextInput
@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 20,
         marginBottom: 50,
-        color: '#000000'
+        color: '#FFFFFF'
     },
     input: {
-        width: '80%',
+        width: '50%',
         height: 40,
         margin: 12,
         borderWidth: 1,

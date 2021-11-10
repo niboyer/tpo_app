@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, Switch, Button } from 'react-native';
 
-import Boton from '../components/Boton';
-import { solicitarAcceso } from '../Controllers/AccesoVecino.controller';
+import Boton from '../../components/Boton';
+import { solicitarAcceso } from '../../Controllers/AccesoVecino.controller';
 
 export default function DatosCrear({ navigation }) {
 

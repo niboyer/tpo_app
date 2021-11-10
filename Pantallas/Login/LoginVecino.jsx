@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, Alert } from 'react-native';
 
-import Boton from '../components/Boton';
+import Boton from '../../components/Boton';
 
-import {accesoVecino} from '../Controllers/AccesoVecino.controller';
+import {accesoVecino} from '../../Controllers/AccesoVecino.controller';
 
 export default function LoginVecino({ navigation }) {
 
@@ -14,6 +14,7 @@ export default function LoginVecino({ navigation }) {
 
 
     const handleIngresar= () => {
+        //navigation.navigate('HomeVecino');
         validarAccesoVecino();            
     }
 

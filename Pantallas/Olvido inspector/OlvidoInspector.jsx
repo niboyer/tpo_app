@@ -1,29 +1,30 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox } from 'react-native';
 
-import Boton from '../components/Boton';
+import Boton from '../../components/Boton';
 
-export default function ReestablecerPassVecino({ navigation }) {
+export default function OlvidoInspector({ navigation }) {
 
-    const [clave, setClave] = useState('');
-    const [confirmar, setConfirmar] = useState('');
+    const [legajo, setLegajo] = useState('');
+    const [email, setEmail] = useState('');
 
     const handleContinuar= () => {
-       navigation.navigate('LoginVecino');
+       navigation.navigate('PregInspector');
     }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Reestablecer contraseña usuario</Text>
+        <Text style={styles.text}>Ingrese su legajo de inspector</Text>
         <TextInput
             style={styles.input}            
-            placeholder="Clave de acceso"
-            onChangeText={clave => setClave(clave)}
+            placeholder="Legajo"
+            onChangeText={legajo => setLegajo(legajo)}
         />
+        <Text style={styles.text}>Ingrese su correo electrónico</Text>
         <TextInput
             style={styles.input}            
-            placeholder="Confirmar clave"
-            onChangeText={confirmar => setConfirmar(confirmar)}
+            placeholder="E-mail"
+            onChangeText={email => setEmail(email)}
         />
         <Boton text='Continuar' onPress={handleContinuar}/>
       </View>

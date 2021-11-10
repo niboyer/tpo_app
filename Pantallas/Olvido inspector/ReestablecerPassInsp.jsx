@@ -1,30 +1,29 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox } from 'react-native';
 
-import Boton from '../components/Boton';
+import Boton from '../../components/Boton';
 
-export default function OlvidoVecino({ navigation }) {
+export default function ReestablecerPassInspector({ navigation }) {
 
-    const [dni, setDni] = useState('');
-    const [email, setEmail] = useState('');
+    const [contraseña, setContraseña] = useState('');
+    const [confirmar, setConfirmar] = useState('');
 
     const handleContinuar= () => {
-       navigation.navigate('PregVecino');
+       navigation.navigate('LoginInspector');
     }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Ingrese su número de documento</Text>
+        <Text style={styles.text}>Reestablecer contraseña inspector</Text>
         <TextInput
             style={styles.input}            
-            placeholder="DNI"
-            onChangeText={dni => setDni(dni)}
+            placeholder="Contraseña"
+            onChangeText={contraseña => setContraseña(contraseña)}
         />
-        <Text style={styles.text}>Ingrese su correo electrónico</Text>
         <TextInput
             style={styles.input}            
-            placeholder="E-mail"
-            onChangeText={email => setEmail(email)}
+            placeholder="Confirmar contraseña"
+            onChangeText={confirmar => setConfirmar(confirmar)}
         />
         <Boton text='Continuar' onPress={handleContinuar}/>
       </View>
@@ -41,10 +40,10 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 20,
         marginBottom: 50,
-        color: '#FFFFFF'
+        color: '#000000'
     },
     input: {
-        width: '50%',
+        width: '80%',
         height: 40,
         margin: 12,
         borderWidth: 1,

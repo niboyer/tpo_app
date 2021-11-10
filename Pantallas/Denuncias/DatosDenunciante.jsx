@@ -3,9 +3,9 @@ import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpaci
 
 import Boton from '../../components/Boton';
 
-export default function ReclamoIndividual({ item, route, navigation }) {
+export default function DatosDenunciante({ item, route, navigation }) {
 
-    const {dir1, dir2, tipo, descripcion, estado} = route.params;
+    const {dir1, dir2, motivo, descripcion, estado} = route.params;
 
     const handleVolver= () => {
         navigation.goBack()
@@ -14,8 +14,8 @@ export default function ReclamoIndividual({ item, route, navigation }) {
       return (
         <View style={styles.container}>
           <ScrollView style={styles.ScrollView}>
-            <Text style={styles.titulo}>ID Reclamo: x</Text>
-            <Text style={styles.text}>Dirección:</Text>
+            <Text style={styles.titulo}>Denuncia contra: X</Text>
+            <Text style={styles.text}>Lugar de la denuncia:</Text>
             <TextInput
                 style={styles.input}            
                 value={dir1}
@@ -26,26 +26,27 @@ export default function ReclamoIndividual({ item, route, navigation }) {
                 value={dir2}
                 editable={false}
             />
-            <Text style={styles.text}>Tipo:</Text>
+            <Text style={styles.text}>Motivo de la denuncia:</Text>
             <TextInput
                 style={styles.input}      
                 value={tipo}
                 editable={false}
+                multiline={true}
             />
-            <Text style={styles.text}>Datos adicionales:</Text>
+            <Text style={styles.text}>Datos adicionales de la denuncia:</Text>
             <TextInput
                 style={styles.descripcion}        
                 value={descripcion}
                 editable={false}
                 multiline={true}
             />
-            <Text style={styles.text}>Estado del reclamo:</Text>
+            <Text style={styles.text}>Estado de la denuncia:</Text>
             <TextInput
                 style={styles.input}        
                 value={estado}
                 editable={false}
             />
-            <Boton text='Volver a lista de reclamos' onPress={handleVolver}/>
+            <Boton text='Volver a lista de denuncias' onPress={handleVolver}/>
           </ScrollView>
         </View>
       );

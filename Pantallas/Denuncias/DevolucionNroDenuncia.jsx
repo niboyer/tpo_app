@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TextInput, Switch, Button } from 'react-native'
 
 import Boton from '../../components/Boton';
 
-export default function GuardadoLocal({ navigation }) {
+export default function DevolucionNroDenuncia({ navigation }) {
     
     const handleInicio = () => {
         navigation.navigate('HomeVecino');
@@ -11,9 +11,9 @@ export default function GuardadoLocal({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.gracias}>Gracias por su cooperación.</Text>
-        <Text style={styles.text}>Su reclamo ha sido guardado localmente.</Text>
-        <Text style={styles.extra}>Cuando se disponga de una red wifi, se enviará el reclamo y se le otorgará el número del mismo.</Text>
+        <Text style={styles.text}>Su denuncia ha sido realizada.</Text>
+        <Text style={styles.numeroReclamo}>El número de su denuncia es X.</Text>
+        <Text style={styles.extra}>Puede ver el estado de su denuncia a través de la aplicación y realizar un seguimiento de la misma con el número provisto.</Text>
         <Boton text='Volver al inicio' onPress={handleInicio}/>
       </View>
     );
@@ -26,24 +26,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#E0E0E0',
     },
-    gracias:{
-        fontSize: 28,
-        color: '#000000',
-        marginBottom: 5,
-        fontWeight: 'bold',
-    },
     text:{
         fontSize: 28,
         color: '#000000',
-        marginBottom: 25,
+        marginBottom: 65,
         fontWeight: 'bold',
     },
-    extra:{
-        fontSize: 22,
+    numeroReclamo: {
+        fontSize: 24,
         color: '#000000',
-        marginTop: 35,
         marginBottom: 15,
         fontWeight: 'bold',
         textDecorationLine: 'underline',
+    },
+    extra: {
+        fontSize: 22,
+        color: '#000000'
     },
 });

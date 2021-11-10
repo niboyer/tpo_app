@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text} from 'react-native';
 
-import PromocionBar from '../components/PromocionBar';
-import MenuOpcion from '../components/MenuOpcion';
-import BotonSalir from '../components/BotonSalir';
+import ReclamoBar from '../../components/ReclamoBar';
+import DenunciasBar from '../../components/DenunciasBar';
+import PromocionBar from '../../components/PromocionBar';
+import MenuOpcion from '../../components/MenuOpcion';
+import BotonSalir from '../../components/BotonSalir';
 
 export default function MainScreen({ navigation }) {
     
@@ -16,7 +18,13 @@ export default function MainScreen({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Bienvenido</Text>
+        <Text style={styles.text}>Bienvenido Inspector</Text>
+        <ReclamoBar/>
+        <MenuOpcion text='Generar Reclamo'/>
+        <MenuOpcion text='Consultar Reclamo'/>
+        <DenunciasBar/>
+        <MenuOpcion text='Generar Denuncia'/>
+        <MenuOpcion text='Consultar Denuncia'/>
         <PromocionBar/>
         <MenuOpcion text='Consulta de promociones' onPress={handleConsultarPromociones}/>
         <BotonSalir text='Salir' onPress={handleSalir}/>

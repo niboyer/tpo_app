@@ -1,14 +1,20 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text} from 'react-native';
 
-import ReclamoBar from '../components/ReclamoBar';
-import DenunciasBar from '../components/DenunciasBar';
-import PromocionBar from '../components/PromocionBar';
-import MenuOpcion from '../components/MenuOpcion';
-import BotonSalir from '../components/BotonSalir';
+import ReclamoBar from '../../components/ReclamoBar';
+import DenunciasBar from '../../components/DenunciasBar';
+import PromocionBar from '../../components/PromocionBar';
+import MenuOpcion from '../../components/MenuOpcion';
+import BotonSalir from '../../components/BotonSalir';
 
 export default function MainScreen({ navigation }) {
     
+    const handleGenerarReclamo = () => {
+        navigation.navigate('GenerarReclamo');
+    }
+    const handleGenerarDenuncia = () => {
+        navigation.navigate('GenerarDenuncia');
+    }
     const handleGenerarComercio = () => {
         navigation.navigate('PublicacionComercio');
     }
@@ -26,10 +32,10 @@ export default function MainScreen({ navigation }) {
       <View style={styles.container}>
         <Text style={styles.text}>Bienvenido Vecino</Text>
         <ReclamoBar/>
-        <MenuOpcion text='Generar Reclamo'/>
+        <MenuOpcion text='Generar Reclamo' onPress={handleGenerarReclamo}/>
         <MenuOpcion text='Consultar Reclamo'/>
         <DenunciasBar/>
-        <MenuOpcion text='Generar Denuncia'/>
+        <MenuOpcion text='Generar Denuncia' onPress={handleGenerarDenuncia}/>
         <MenuOpcion text='Consultar Denuncia'/>
         <PromocionBar/>
         <MenuOpcion text='Generar publicación de comercio' onPress={handleGenerarComercio}/>

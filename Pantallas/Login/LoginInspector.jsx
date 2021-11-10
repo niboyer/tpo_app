@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, ScrollView, CheckBox, Alert} from 'react-native';
 
-import Boton from '../components/Boton';
+import Boton from '../../components/Boton';
 
-import {accesoInspector} from '../Controllers/AccesoInspector.controller';
+import {accesoInspector} from '../../Controllers/AccesoInspector.controller';
 
 export default function LoginInspector({ navigation }) {
 
