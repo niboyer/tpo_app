@@ -30,11 +30,12 @@ const styles = StyleSheet.create({
       flex: 1, 
       alignItems: 'center', 
       justifyContent: 'center',
-      backgroundColor: '#263238'
+      backgroundColor: '#E0E0E0'
     },
     text:{
         fontSize: 24,
         marginBottom: 50,
+        fontWeight: 'bold',
         color: '#000000',
         textDecorationLine: 'underline',
     },

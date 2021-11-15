@@ -11,8 +11,9 @@ export default function PantallaDatos({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Sus datos fueron enviados para revision</Text>
-        <Text style={styles.text}>Si están correctos, en el transcurso de los siguientes días recibirá un email para crear tu clave de acceso.</Text>
+        <Text style={styles.text1}>Sus datos fueron enviados para revision</Text>
+        <Text style={styles.text2}>Si están correctos, en el transcurso de los siguientes días recibirá una notificación para crear su clave de acceso. </Text>
+        <Text style={styles.text2}>Una vez reciba esa notificación, ingrese a la aplicación y vaya a loguearse como vecino. </Text>
         <Boton text='Volver al inicio' onPress={handleInicio}/>
       </View>
     );
@@ -25,8 +26,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#263238',
     },
-    text:{
+    text1:{
         fontSize: 25,
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        textAlign: 'center',
+        marginBottom: 35,
     },
+    text2:{
+      fontSize: 25,
+      color: '#FFFFFF',
+      textAlign: 'center',
+      marginBottom: 15,
+  },
 });

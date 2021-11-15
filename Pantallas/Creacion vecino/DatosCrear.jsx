@@ -35,7 +35,7 @@ export default function DatosCrear({ navigation }) {
 
     const handleEnviar = () => {
       solicitarAccesoVecino();
-       //navigation.navigate('PantallaDatos');
+      //navigation.navigate('PantallaDatos');
     }
 
     return (

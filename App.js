@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import MainScreen from './Pantallas/MainScreen';
 import ElegirLogin from './Pantallas/Login/ElegirLogin';
+import VerificarDNI from './Pantallas/Login/VerificarDNI';
+import CrearClave from './Pantallas/Creacion vecino/CrearClave';
 import LoginVecino from './Pantallas/Login/LoginVecino';
 import LoginInspector from './Pantallas/Login/LoginInspector';
 import DatosCrear from './Pantallas/Creacion vecino/DatosCrear';
@@ -43,6 +45,8 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name="MainScreen" component={MainScreen} />
         <Stack.Screen name="ElegirLogin" component={ElegirLogin} />
+        <Stack.Screen name="VerificarDNI" component={VerificarDNI} />
+        <Stack.Screen name="CrearClave" component={CrearClave} />
         <Stack.Screen name="LoginVecino" component={LoginVecino} />
         <Stack.Screen name="OlvidoVecino" component={OlvidoVecino}/>
         <Stack.Screen name="PregVecino" component={PregVecino}/>
