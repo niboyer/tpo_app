@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, TextInput, CheckBox} from 'react-native';
 
 import Boton from '../../components/Boton';
-import DenunciasUsuarioBar from '../../components/DenunciasUsuarioBar';
-import DenunciasContraBar from '../../components/DenunciasContraBar';
 //import { getPublicacionesByTipo } from '../../Controllers/Publicaciones.controller';
 
-export default function ListaDenuncias({ navigation }) {
+export default function ListaReclamos({ navigation }) {
     
     const [data, setData] = useState([]);
     const [id, setID] = useState('');
+    const [isPropio, setPropio] = useState(false);
+    const [isGeneral, setGeneral] = useState(false);
 
    /*  useEffect(()=>{
         async function componentDidMount(){
@@ -26,30 +26,31 @@ export default function ListaDenuncias({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Denuncias referentes al usuario</Text>
+        <Text style={styles.text}>Reclamos existentes en el municipio</Text>
         <View style={styles.busquedas}>
             <Text style={styles.text}>ID:</Text>
             <TextInput
                     style={styles.input}
-                    placeholder="ID de la denuncia"
+                    placeholder="ID del reclamo"
                     onChangeText={id => setID(id)}
             />
+            <View style={styles.checkboxContainer}>
+                <CheckBox
+                    value={isPropio}
+                    onValueChange={setPropio}
+                    style={styles.checkbox}
+                />
+                <Text style={styles.label}>Propio</Text>
+            </View>
+            <View style={styles.checkboxContainer}>
+                <CheckBox
+                    value={isGeneral}
+                    onValueChange={setGeneral}
+                    style={styles.checkbox}
+                />
+                <Text style={styles.label}>General</Text>
+            </View>
         </View>
-        <DenunciasUsuarioBar/>
-        <FlatList
-            data={data}
-            renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.email});}}>
-                    <Text style={styles.datos}>{item.nombre}</Text>
-                    <Text style={styles.datos}>{item.descripcion}</Text>
-                    <Text style={styles.datos}>{item.direccion}</Text>
-                    <Text style={styles.datos}>{item.telefono}</Text>
-                    <Text style={styles.datos}>{item.email}</Text>
-                </TouchableOpacity>
-            )}
-            keyExtractor={(item) => item.idPublicacion}
-        />
-        <DenunciasContraBar/>
         <FlatList
             data={data}
             renderItem={({item}) => (
@@ -104,5 +105,17 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'black',
         alignSelf: 'center',
+        marginRight: 40
     },
+    checkboxContainer: {
+        flexDirection: "row",
+      },
+      checkbox: {
+        alignSelf: "center",
+      },
+      label: {
+        margin: 8,
+        color:'black',
+        fontWeight: 'bold'
+      },
 });

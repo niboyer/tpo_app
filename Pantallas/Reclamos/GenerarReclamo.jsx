@@ -3,8 +3,11 @@ import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpaci
 
 import * as ImagePicker from 'expo-image-picker';
 import Boton from '../../components/Boton';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 export default function GenerarReclamo({ navigation }) {
+
+    const netInfo = useNetInfo();
 
     const [dir1, setDir1] = useState('');
     const [dir2, setDir2] = useState('');
@@ -14,14 +17,15 @@ export default function GenerarReclamo({ navigation }) {
     const [fileNames, setFileNames] = useState(null);
     const [files, setFiles] = useState(null);
 
-    const wifi = false;
-
     const handleCrearReclamo= () => {
-      if(wifi == true){
+      if(netInfo.isWifiEnabled){
         navigation.navigate('DevolucionNro');
       }
-      else{
+      else if(netInfo.isConnected){
         navigation.navigate('EnviarRed');
+      }
+      else{
+        console.log("No se encontró conexión a internet");
       }
     }
 

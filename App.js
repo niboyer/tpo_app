@@ -30,6 +30,7 @@ import GenerarReclamo from './Pantallas/Reclamos/GenerarReclamo';
 import EnviarRed from './Pantallas/Reclamos/EnviarRed';
 import DevolucionNro from './Pantallas/Reclamos/DevolucionNro';
 import GuardadoLocal from './Pantallas/Reclamos/GuardadoLocal';
+import ListaReclamos from './Pantallas/Reclamos/ListaReclamos';
 import GenerarDenuncia from './Pantallas/Denuncias/GenerarDenuncia';
 import GenerarDenunciaComercio from './Pantallas/Denuncias/GenerarDenunciaComercio';
 import GenerarDenunciaVecino from './Pantallas/Denuncias/GenerarDenunciaVecino';
@@ -64,6 +65,7 @@ export default function App() {
         <Stack.Screen name="EnviarRed" component={EnviarRed}/>
         <Stack.Screen name="DevolucionNro" component={DevolucionNro}/>
         <Stack.Screen name="GuardadoLocal" component={GuardadoLocal}/>
+        <Stack.Screen name="ListaReclamos" component={ListaReclamos}/>
         <Stack.Screen name="GenerarDenuncia" component={GenerarDenuncia}/>
         <Stack.Screen name="GenerarDenunciaComercio" component={GenerarDenunciaComercio}/>
         <Stack.Screen name="GenerarDenunciaVecino" component={GenerarDenunciaVecino}/>
