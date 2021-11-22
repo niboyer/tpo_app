@@ -4,7 +4,7 @@ import { StyleSheet, View, Text} from 'react-native';
 import Boton from '../components/Boton';
 
 export default function MainScreen({ navigation }) {
-    
+
     const handleIngresar = () => {
        navigation.navigate('ElegirLogin');
     }
@@ -37,5 +37,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#000000',
         fontWeight: 'bold'
+    },
+    buttonText: {
+      fontSize: 18,
+      textAlign: 'center',
+      margin: 10,
+      color: '#ffffff',
     },
 });
