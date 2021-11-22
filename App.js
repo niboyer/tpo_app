@@ -36,6 +36,7 @@ import GenerarDenunciaComercio from './Pantallas/Denuncias/GenerarDenunciaComerc
 import GenerarDenunciaVecino from './Pantallas/Denuncias/GenerarDenunciaVecino';
 import DeclaracionJurada from './Pantallas/Denuncias/DeclaracionJurada';
 import DevolucionNroDenuncia from './Pantallas/Denuncias/DevolucionNroDenuncia';
+import ListaDenuncias from './Pantallas/Denuncias/ListaDenuncias';
 
 
 const Stack = createNativeStackNavigator();
@@ -69,6 +70,7 @@ export default function App() {
         <Stack.Screen name="GenerarDenuncia" component={GenerarDenuncia}/>
         <Stack.Screen name="GenerarDenunciaComercio" component={GenerarDenunciaComercio}/>
         <Stack.Screen name="GenerarDenunciaVecino" component={GenerarDenunciaVecino}/>
+        <Stack.Screen name="ListaDenuncias" component={ListaDenuncias}/>        
         <Stack.Screen name="DeclaracionJurada" component={DeclaracionJurada}/>
         <Stack.Screen name="DevolucionNroDenuncia" component={DevolucionNroDenuncia}/>
         <Stack.Screen name="PublicacionComercio" component={PublicacionComercio}/>

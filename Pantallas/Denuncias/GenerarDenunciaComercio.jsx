@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
+import Checkbox from 'expo-checkbox';
 
 import * as ImagePicker from 'expo-image-picker';
 import Boton from '../../components/Boton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createDenuncia } from '../../Controllers/Denuncias.controller';
 
 export default function GenerarDenunciaComercio({ navigation }) {
 
-    const [nombre, setNombre] = useState('');
+    const [documento, setDocumento] = useState('');
+    const [descripcionDenunciado, setDescripcionDenunciado] = useState('');
     const [dir1, setDir1] = useState('');
     const [dir2, setDir2] = useState('');
     const [motivo, setMotivo] = useState('');
@@ -15,8 +19,67 @@ export default function GenerarDenunciaComercio({ navigation }) {
     const [fileNames, setFileNames] = useState(null);
     const [files, setFiles] = useState(null);
 
+    const [isChecked, setChecked] = useState(false);
+
+    useEffect(() => {
+      getStorageItems();
+    }, []);
+
+    const getStorageItems = async () => {
+      const documento = await loadData('documento');
+      setDocumento(documento);
+    }
+
+    const storeData = async (key, value) => {
+      try {
+        await AsyncStorage.setItem(key, value);
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
+
+    const loadData = async (key) => {
+      const recuperado = await AsyncStorage.getItem(key);
+      return recuperado;
+    }
+
+    const clearAll = async () => {
+      try {
+        await AsyncStorage.clear()
+      } catch(error) {
+        console.log(error);
+      }
+    }
+
     const handleCrearDenuncia= () => {
-      navigation.navigate('DeclaracionJurada');
+      if(isChecked) {
+        crearDenuncia();
+        
+      }
+      else {
+        Alert.alert('Error', 'Debe aceptar los terminos', [{text: 'Aceptar'}]);
+      }
+    }
+
+    const crearDenuncia = async function () {
+      let datos = {
+        documento: documento,        
+        idSitio: 3,
+        descripcion: descripcion,
+        aceptaResponsabilidad: 1,
+        descripcionDenunciado: descripcionDenunciado,
+        nombreImagenes: fileNames,
+        archivoImagenes: files,        
+      }
+
+      let getRespuesta = await createDenuncia(datos);
+      if(getRespuesta.rdo === 200){
+        navigation.navigate('DevolucionNroDenuncia',{
+          idDenuncias: getRespuesta.data.createdDenuncia.idDenuncias,
+        });
+      } else {
+        Alert.alert('Error', getRespuesta.mensaje, [{text: 'Aceptar'}]);
+      }
     }
 
     /*
@@ -35,7 +98,7 @@ export default function GenerarDenunciaComercio({ navigation }) {
         navigation.navigate('DeclaracionJurada');
       }
     }
-
+*/
     let openImagePickerAsync = async () => {
       let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
   
@@ -56,16 +119,17 @@ export default function GenerarDenunciaComercio({ navigation }) {
         setFileNames(result)
       }
     }
-    */
+    
 
     return (
       <View style={styles.container}>
         <ScrollView>
           <Text style={styles.text}>Denuncia contra: Comercio</Text>
+          <Text style={styles.text}>Descripcion del comercio:</Text>
           <TextInput
-              style={styles.input}            
-              placeholder="Nombre del comercio"
-              onChangeText={nombre => setNombre(nombre)}
+              style={styles.descripcion}            
+              placeholder="Descripcion del comercio"
+              onChangeText={descripcionDenunciado => setDescripcionDenunciado(descripcionDenunciado)}
           />
           <TextInput
               style={styles.input}            
@@ -77,23 +141,21 @@ export default function GenerarDenunciaComercio({ navigation }) {
               placeholder="Dirección 2"
               onChangeText={dir2 => setDir2(dir2)}
           />
-          <Text style={styles.text}>Motivo de la denuncia:</Text>
+          <Text style={styles.text}>Descripcion de su denuncia</Text>
           <TextInput
               style={styles.descripcion}            
-              placeholder="Motivo por el cual realiza la denuncia"
-              onChangeText={motivo => setMotivo(motivo)}
-          />
-          <Text style={styles.text}>Datos adicionales de su reclamo</Text>
-          <TextInput
-              style={styles.descripcion}            
-              placeholder="Descripcion"
+              placeholder="Descripcion de su denuncia"
               onChangeText={descripcion => setDescripcion(descripcion)}
           />
-          {/* <TouchableOpacity onPress={openImagePickerAsync}>
+          
+        
+           <TouchableOpacity onPress={openImagePickerAsync}>
             <Text>Seleccionar Imagen</Text>
           </TouchableOpacity>
-          <Image key={files} style={{ width: 200, height: 200 }} source={{ uri: files }} />   */}
+          <Image key={files} style={{ width: 200, height: 200 }} source={{ uri: files }} />   
 
+          <Text style={styles.text}>Acepto, en carácter de declaración jurada, que lo indicado en el objeto de la denuncia y pruebas aportadas en caso de falsedad puede dar lugar a una acción judicial por parte del municipio y/o los denunciados</Text>
+          <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
 
           <Boton text='Continuar' onPress={handleCrearDenuncia}/>
         </ScrollView>
@@ -125,6 +187,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'black',
         alignSelf: 'center',
+    },
+    checkbox: {
+      margin: 8,
     },
     descripcion:{
       width: '80%',

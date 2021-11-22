@@ -55,6 +55,9 @@ export default function MainScreen({ navigation }) {
     const handleGenerarDenuncia = () => {
         navigation.navigate('GenerarDenuncia');
     }
+    const handleConsultarDenuncias = () => {
+      navigation.navigate('ListaDenuncias');
+  }
     const handleGenerarComercio = () => {
         navigation.navigate('PublicacionComercio');
     }
@@ -77,7 +80,7 @@ export default function MainScreen({ navigation }) {
         <MenuOpcion text='Consultar Reclamo' onPress={handleConsultarReclamos}/>
         <DenunciasBar/>
         <MenuOpcion text='Generar Denuncia' onPress={handleGenerarDenuncia}/>
-        <MenuOpcion text='Consultar Denuncia'/>
+        <MenuOpcion text='Consultar Denuncia' onPress={handleConsultarDenuncias}/>
         <PromocionBar/>
         <MenuOpcion text='Generar publicación de comercio' onPress={handleGenerarComercio}/>
         <MenuOpcion text='Generar servicio profesional' onPress={handleGenerarServicio}/>
