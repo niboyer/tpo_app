@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, Switch, Button } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Alert } from 'react-native';
 
 import Boton from '../../components/Boton';
 import { solicitarAcceso } from '../../Controllers/AccesoVecino.controller';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function DatosCrear({ navigation }) {
 
@@ -10,6 +12,24 @@ export default function DatosCrear({ navigation }) {
     const [apellido, setApellido] = useState('');
     const [dni, setDni] = useState('');
     const [email, setEmail] = useState('');
+
+    const storeData = async (value) => {
+      try {
+        const jsonValue = JSON.stringify(value)
+        await AsyncStorage.setItem('UserData', jsonValue)
+      } catch (e) {
+        // saving error
+      }
+    }
+
+    const getData = async () => {
+      try {
+        const jsonValue = await AsyncStorage.getItem('UserData')
+        return jsonValue != null ? JSON.parse(jsonValue) : null;
+      } catch(e) {
+        // error reading value
+      }
+    }
 
     const solicitarAccesoVecino = async function () {
       let datos = {
@@ -19,23 +39,22 @@ export default function DatosCrear({ navigation }) {
           email:email,
       }
       let getLogin = await solicitarAcceso(datos);
-      if (getLogin.rdo === 200) {
-          //setUsuarioValido(true);
-
-          //guardar en storage los datos del usuario
-          //console.log(getLogin.data.loginUser.token)
-          //console.log(getLogin.data.loginUser.user.nombre)
+      
+      if (getLogin.rdo == 200) {
           navigation.navigate('PantallaDatos');
       }
-      if (getLogin.rdo === 401) {
-        //console.log(getLogin.mensaje)
+
+      if (getLogin.rdo === 403) {
+        Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
+      }
+
+      if (getLogin.rdo === 404) {
         Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
       }
   }
 
     const handleEnviar = () => {
       solicitarAccesoVecino();
-      //navigation.navigate('PantallaDatos');
     }
 
     return (

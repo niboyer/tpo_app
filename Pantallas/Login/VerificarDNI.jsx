@@ -3,29 +3,53 @@ import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, Alert } from '
 
 import Boton from '../../components/Boton';
 
-import {accesoVecino} from '../../Controllers/AccesoVecino.controller';
+import {verificarUsuarioActivo} from '../../Controllers/AccesoVecino.controller';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function VerificarDNI({ navigation }) {
 
-    const [dni, setDni] = useState('');
+    const [documento, setdocumento] = useState('');
 
-    const handleIngresar= () => {
-        //validarDNIVecino();       
-        //navigation.navigate('LoginVecino');
-        navigation.navigate('CrearClave');
+    const handleIngresar = () => {
+        validarDNIVecino();       
+    }
+
+    const storeData = async (key, value) => {
+      try {
+        await AsyncStorage.setItem(key, value);
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
+
+    const loadData = async (key) => {
+      const recuperado = await AsyncStorage.getItem(key);
+      return recuperado;
     }
 
     const validarDNIVecino = async function () {
       let datos = {
-          dni: dni,
+        documento: documento,
       }
-      let getLogin = await verificarDNI(datos);
-      if (getLogin.rdo == true) {
-          navigation.navigate('LoginVecino');
+      let getLogin = await verificarUsuarioActivo(datos);
+
+      if (getLogin.rdo == 200) {
+        await storeData('documento', getLogin.data.documento);
+        navigation.navigate('LoginVecino');
       }
-      if (getLogin.rdo == false) {
-        Alert.alert('Error', 'Para habilitar su cuenta, se le pedirá que genere una clave de acceso y una pregunta de seguridad', [{text: 'Cerrar'}]);
+      
+      if (getLogin.rdo == 201) {
+        await storeData('documento', getLogin.data.documento);
+        Alert.alert('INFO', 'Para habilitar su cuenta, se le pedirá que genere una clave de acceso y una pregunta de seguridad', [{text: 'Cerrar'}]);
         navigation.navigate('CrearClave');
+      }
+
+      if(getLogin.rdo == 403){
+        Alert.alert('ERROR', getLogin.mensaje, [{text: 'Cerrar'}]);
+      }
+
+      if(getLogin.rdo == 404){
+        Alert.alert('ERROR', getLogin.mensaje, [{text: 'Cerrar'}]);
       }
   }
 
@@ -36,11 +60,11 @@ export default function VerificarDNI({ navigation }) {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.text}>Ingrese su DNI</Text>
+          <Text style={styles.text}>Ingrese su Documento</Text>
           <TextInput
               style={styles.input}            
-              placeholder="DNI"
-              onChangeText={dni => setDni(dni)}
+              placeholder="DOCUMENTO"
+              onChangeText={documento => setdocumento(documento)}
           />
           <Boton text='Acceder' onPress={handleIngresar}/>
           <Boton text='Volver atrás' onPress={handleVolver}/>

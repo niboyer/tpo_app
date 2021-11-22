@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, TextInput, Switch, Button, Alert } from 'react-native';
 
 import Boton from '../../components/Boton';
-//import { solicitarAcceso } from '../../Controllers/AccesoVecino.controller';
+import { crearAcceso } from '../../Controllers/AccesoVecino.controller';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CrearClave({ navigation }) {
 
@@ -11,37 +12,53 @@ export default function CrearClave({ navigation }) {
     const [pregunta, setPregunta] = useState('');
     const [respuesta, setRespuesta] = useState('');
 
-    /* const solicitarHabilitarVecino = async function () {
-      let datos = {
-          clave: clave,
-          pregunta: pregunta,
-          respuesta: respuesta,
-      }
-      let getLogin = await solicitarAcceso(datos);
-      if (getLogin.rdo === 200) {
-          //setUsuarioValido(true);
 
-          //guardar en storage los datos del usuario
-          //console.log(getLogin.data.loginUser.token)
-          //console.log(getLogin.data.loginUser.user.nombre)
+    const storeData = async (key, value) => {
+      try {
+        await AsyncStorage.setItem(key, value);
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
+
+    const loadData = async (key) => {
+      const recuperado = await AsyncStorage.getItem(key);
+      return recuperado;
+    }
+
+     const solicitarHabilitarVecino = async function () {
+
+      const documento = await loadData('documento');
+      let datos = {
+          documento: documento,
+          password: clave,
+          preguntaSecreta: pregunta,
+          respuestaSecreta: respuesta,
+      }
+
+      let getLogin = await crearAcceso(datos);
+
+      if (getLogin.rdo === 200) {
           Alert.alert('Cuenta creada', 'Se creó su cuenta exitosamente', [{text: 'Continuar'}]);
           navigation.navigate('LoginVecino');
       }
-      if (getLogin.rdo === 401) {
-        //console.log(getLogin.mensaje)
+
+      if (getLogin.rdo === 404) {
         Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
       }
-  } */
+
+      if (getLogin.rdo === 500) {
+        Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
+      }
+  } 
 
     const handleEnviar = () => {
-       //solicitarHabilitarVecino();
-       Alert.alert('Cuenta creada exitosamente', [{text: 'Cerrar'}]);
-       navigation.navigate('LoginVecino');
+      solicitarHabilitarVecino();
     }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Creación de usuario:</Text>
+        <Text style={styles.text}>Creación de usuario: </Text>
         <TextInput
             style={styles.input}            
             placeholder="Clave de acceso"

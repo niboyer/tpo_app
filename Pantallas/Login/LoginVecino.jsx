@@ -1,17 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, Alert } from 'react-native';
 
 import Boton from '../../components/Boton';
 
 import {accesoVecino} from '../../Controllers/AccesoVecino.controller';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginVecino({ navigation }) {
 
     const [dni, setDni] = useState('');
     const [clave, setClave] = useState('');
-
+    const [documento, setdocumento] = useState('');
     const [isSelected, setSelection] = useState(false);
 
+    useEffect(() => {
+      getStorageItems();
+    }, []);
+
+    const getStorageItems = async () => {
+      const userData = await loadData('documento');
+      setdocumento(userData);
+    }
+
+    const storeData = async (key, value) => {
+      try {
+        await AsyncStorage.setItem(key, value);
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
+
+    const loadData = async (key) => {
+      const recuperado = await AsyncStorage.getItem(key);
+      return recuperado;
+    }
 
     const handleIngresar= () => {
         //navigation.navigate('HomeVecino');
@@ -20,20 +42,28 @@ export default function LoginVecino({ navigation }) {
 
     const validarAccesoVecino = async function () {
       let datos = {
-          dni: dni,
+          dni: documento,
           clave: clave
       }
       let getLogin = await accesoVecino(datos);
       if (getLogin.rdo === 200) {
-          //setUsuarioValido(true);
-
-          //guardar en storage los datos del usuario
-          console.log(getLogin.data.loginUser.token)
-          console.log(getLogin.data.loginUser.user.nombre)
+        await storeData('token', getLogin.data.loginUser.token);
+        await storeData('nombre', getLogin.data.loginUser.user.nombre);
+        await storeData('apellido', getLogin.data.loginUser.user.apellido);
+          //console.log(getLogin.data.loginUser.token)
+          //console.log(getLogin.data.loginUser.user.nombre)
           navigation.navigate('HomeVecino');
       }
+
       if (getLogin.rdo === 401) {
-        //console.log(getLogin.mensaje)
+        Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
+      }
+
+      if (getLogin.rdo === 404) {
+        Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
+      }
+
+      if (getLogin.rdo === 500) {
         Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
       }
   }
@@ -47,8 +77,10 @@ export default function LoginVecino({ navigation }) {
         <ScrollView>
           <Text style={styles.text}>Login usuario</Text>
           <TextInput
+              editable={false}              
               style={styles.input}            
               placeholder="DNI"
+              defaultValue= {documento.toString()}
               onChangeText={dni => setDni(dni)}
           />
           <TextInput

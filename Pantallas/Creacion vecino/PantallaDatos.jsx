@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, Switch, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Text} from 'react-native';
 
 import Boton from '../../components/Boton';
 
-export default function PantallaDatos({ navigation }) {
-    
+export default function PantallaDatos({ navigation }) {  
+
     const handleInicio = () => {
        navigation.navigate('MainScreen');
     }
