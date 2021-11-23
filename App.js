@@ -46,6 +46,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="ListaComercios" component={ListaComercios}/>
         <Stack.Screen name="MainScreen" component={MainScreen} />
         <Stack.Screen name="ElegirLogin" component={ElegirLogin} />
         <Stack.Screen name="VerificarDNI" component={VerificarDNI} />
@@ -77,7 +78,6 @@ export default function App() {
         <Stack.Screen name="DevolucionNroDenuncia" component={DevolucionNroDenuncia}/>
         <Stack.Screen name="PublicacionComercio" component={PublicacionComercio}/>
         <Stack.Screen name="PublicacionServicio" component={PublicacionServicio}/>
-        <Stack.Screen name="ListaComercios" component={ListaComercios}/>
         <Stack.Screen name="ComercioDatos" component={ComercioDatos}/>
         <Stack.Screen name="ListaServicios" component={ListaServicios}/>
         <Stack.Screen name="ServicioDatos" component={ServicioDatos}/>

@@ -50,21 +50,9 @@ export default function GenerarReclamo({ navigation }) {
         console.log(error);
       }
     }
-
-    const handleCrearReclamo= () => {
-      if(netInfo.isWifiEnabled){
-        navigation.navigate('DevolucionNro');
-      }
-      else if(netInfo.isConnected){
-        navigation.navigate('EnviarRed');
-      }
-      else{
-        Alert.alert('Error', 'No se encontró conexión a internet para continuar', [{text: 'Aceptar'}]);
-      }
-    }
-
-    
+   
     const handleCrearReclamo = async function () {
+      
       let datos = {
         dir1: dir1,
         dir2: dir2,
@@ -77,7 +65,15 @@ export default function GenerarReclamo({ navigation }) {
 
       let getRespuesta = await createReclamo(datos);
       if(getRespuesta.rdo === 0){
-        navigation.navigate('DevolucionNro');
+        if(netInfo.isWifiEnabled){
+          navigation.navigate('DevolucionNro');
+        }
+        else if(netInfo.isConnected){
+          navigation.navigate('EnviarRed');
+        }
+        else{
+          Alert.alert('Error', 'No se encontró conexión a internet para continuar', [{text: 'Aceptar'}]);
+        }
       } else {
         Alert.alert('Error', getRespuesta.mensaje, [{text: 'Aceptar'}]);
       }

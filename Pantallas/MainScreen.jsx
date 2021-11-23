@@ -12,7 +12,7 @@ export default function MainScreen({ navigation }) {
       navigation.navigate('DatosCrear');
     }
     const handleInvitado = () => {
-      navigation.navigate('HomeInvitado');
+      navigation.navigate('ListaComercios');
     }
 
     return (
@@ -21,7 +21,7 @@ export default function MainScreen({ navigation }) {
         <Boton text='Ingresar' onPress={handleIngresar}/>
         <Text style={styles.text}>¿Desea crear su nueva cuenta?</Text>
         <Boton text='Crear cuenta' onPress={handleCrear}/>
-        <Boton text='Ingresar como invitado' onPress={handleInvitado}/>
+        <Boton text='Continuar como invitado' onPress={handleInvitado}/>
       </View>
     );
 }

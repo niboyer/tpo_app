@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity} from 'react-native';
+import { Icon } from 'react-native-elements'
 
 import Boton from '../../components/Boton';
 import BotonPublicaciones from '../../components/BotonPublicaciones';
@@ -27,6 +28,15 @@ export default function ListaComercios({ navigation }) {
 
     return (
       <View style={styles.container}>
+        <View>
+            <Icon
+                raised
+                name='person-circle'
+                type='ionicon'
+                color='#000000'
+                onPress={() => navigation.navigate('MainScreen')}
+            />
+        </View>
         <Text style={styles.text}>Consulta de promociones</Text>
         <BotonPublicaciones text='Ver comercios' onPress={handleComercios}/>
         <FlatList
