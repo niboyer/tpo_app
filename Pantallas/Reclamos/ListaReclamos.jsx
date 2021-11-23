@@ -2,23 +2,23 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, TextInput, CheckBox} from 'react-native';
 
 import Boton from '../../components/Boton';
-//import { getPublicacionesByTipo } from '../../Controllers/Publicaciones.controller';
+import { getReclamosByDocumento, getReclamosByTipo } from '../../Controllers/Reclamos.controller';
 
 export default function ListaReclamos({ navigation }) {
     
     const [data, setData] = useState([]);
-    const [id, setID] = useState('');
+    const [tipo, setTipo] = useState('');
     const [isPropio, setPropio] = useState(false);
     const [isGeneral, setGeneral] = useState(false);
 
-   /*  useEffect(()=>{
+   useEffect(()=>{
         async function componentDidMount(){
-            let rdo = await getPublicacionesByTipo('Comercio');
+            let rdo = await getReclamosByDocumento('123456789');
             setData(rdo);
             console.log(rdo)
         }
         componentDidMount();
-    }, []); */
+    }, []);
 
     const handleVolver = () => {
         navigation.goBack()
@@ -28,11 +28,11 @@ export default function ListaReclamos({ navigation }) {
       <View style={styles.container}>
         <Text style={styles.text}>Reclamos existentes en el municipio</Text>
         <View style={styles.busquedas}>
-            <Text style={styles.text}>ID:</Text>
+            <Text style={styles.text}>Tipo:</Text>
             <TextInput
                     style={styles.input}
-                    placeholder="ID del reclamo"
-                    onChangeText={id => setID(id)}
+                    placeholder="Tipo de reclamo"
+                    onChangeText={tipo => setTipo(tipo)}
             />
             <View style={styles.checkboxContainer}>
                 <CheckBox
@@ -54,12 +54,12 @@ export default function ListaReclamos({ navigation }) {
         <FlatList
             data={data}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.email});}}>
-                    <Text style={styles.datos}>{item.nombre}</Text>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ReclamoIndividual', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', direccion1: item.direccion1, direccion2: item.direccion2, tipo: item.tipo, descripcion: item.descripcion, estado: item.estado});}}>
+                    <Text style={styles.datos}>{item.direccion1}</Text>
+                    <Text style={styles.datos}>{item.direccion2}</Text>
+                    <Text style={styles.datos}>{item.tipo}</Text>
                     <Text style={styles.datos}>{item.descripcion}</Text>
-                    <Text style={styles.datos}>{item.direccion}</Text>
-                    <Text style={styles.datos}>{item.telefono}</Text>
-                    <Text style={styles.datos}>{item.email}</Text>
+                    <Text style={styles.datos}>{item.estado}</Text>
                 </TouchableOpacity>
             )}
             keyExtractor={(item) => item.idPublicacion}

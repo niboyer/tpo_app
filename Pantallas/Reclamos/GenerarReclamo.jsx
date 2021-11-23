@@ -2,12 +2,16 @@ import React, {useState} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpacity, Image } from 'react-native';
 
 import * as ImagePicker from 'expo-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Boton from '../../components/Boton';
+import {createReclamo} from '../../Controllers/Reclamos.controller';
 import { useNetInfo } from '@react-native-community/netinfo';
 
 export default function GenerarReclamo({ navigation }) {
 
     const netInfo = useNetInfo();
+
+    const [documento, setDocumento] = useState('');
 
     const [dir1, setDir1] = useState('');
     const [dir2, setDir2] = useState('');
@@ -17,6 +21,36 @@ export default function GenerarReclamo({ navigation }) {
     const [fileNames, setFileNames] = useState(null);
     const [files, setFiles] = useState(null);
 
+    useEffect(() => {
+      getStorageItems();
+    }, []);
+
+    const getStorageItems = async () => {
+      const documento = await loadData('documento');
+      setDocumento(documento);
+    }
+
+    const storeData = async (key, value) => {
+      try {
+        await AsyncStorage.setItem(key, value);
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
+
+    const loadData = async (key) => {
+      const recuperado = await AsyncStorage.getItem(key);
+      return recuperado;
+    }
+
+    const clearAll = async () => {
+      try {
+        await AsyncStorage.clear()
+      } catch(error) {
+        console.log(error);
+      }
+    }
+
     const handleCrearReclamo= () => {
       if(netInfo.isWifiEnabled){
         navigation.navigate('DevolucionNro');
@@ -25,11 +59,11 @@ export default function GenerarReclamo({ navigation }) {
         navigation.navigate('EnviarRed');
       }
       else{
-        console.log("No se encontró conexión a internet");
+        Alert.alert('Error', 'No se encontró conexión a internet para continuar', [{text: 'Aceptar'}]);
       }
     }
 
-    /*
+    
     const handleCrearReclamo = async function () {
       let datos = {
         dir1: dir1,
@@ -37,11 +71,15 @@ export default function GenerarReclamo({ navigation }) {
         tipo: tipo,
         descripcion: descripcion,
         nombreImagenes: fileNames,
-        archivoImagenes: files
+        archivoImagenes: files,
+        documento: documento
       }
+
       let getRespuesta = await createReclamo(datos);
       if(getRespuesta.rdo === 0){
         navigation.navigate('DevolucionNro');
+      } else {
+        Alert.alert('Error', getRespuesta.mensaje, [{text: 'Aceptar'}]);
       }
     }
 
@@ -65,7 +103,7 @@ export default function GenerarReclamo({ navigation }) {
         setFileNames(result)
       }
     }
-    */
+    
 
     return (
       <View style={styles.container}>
@@ -92,10 +130,12 @@ export default function GenerarReclamo({ navigation }) {
               placeholder="Descripcion"
               onChangeText={descripcion => setDescripcion(descripcion)}
           />
-          {/* <TouchableOpacity onPress={openImagePickerAsync}>
+
+
+           <TouchableOpacity onPress={openImagePickerAsync}>
             <Text>Seleccionar Imagen</Text>
           </TouchableOpacity>
-          <Image key={files} style={{ width: 200, height: 200 }} source={{ uri: files }} />   */}
+          <Image key={files} style={{ width: 200, height: 200 }} source={{ uri: files }} />
 
 
           <Boton text='Enviar reclamo' onPress={handleCrearReclamo}/>

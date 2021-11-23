@@ -4,21 +4,25 @@ import { StyleSheet, View, Text, FlatList, TouchableOpacity, TextInput} from 're
 import Boton from '../../components/Boton';
 import DenunciasUsuarioBar from '../../components/DenunciasUsuarioBar';
 import DenunciasContraBar from '../../components/DenunciasContraBar';
-//import { getPublicacionesByTipo } from '../../Controllers/Publicaciones.controller';
+import { getDenunciasByID, getDenunciasByDocumento } from '../../Controllers/Denuncias.controller';
 
 export default function ListaDenuncias({ navigation }) {
     
-    const [data, setData] = useState([]);
+    const [dataDenuncias, setDataDenuncias] = useState([]);
+    const [dataDenunciado, setDataDenunciado] = useState([]);
     const [id, setID] = useState('');
 
-   /*  useEffect(()=>{
+     useEffect(()=>{
         async function componentDidMount(){
-            let rdo = await getPublicacionesByTipo('Comercio');
-            setData(rdo);
+            let rdo = await getDenunciasByID('01');
+            let rdo1 = await getDenunciasByDocumento('123456789');
+            setDataDenuncias(rdo);
+            setDataDenunciado(rdo1);
             console.log(rdo)
+            console.log(rdo1)
         }
         componentDidMount();
-    }, []); */
+    }, []);
 
     const handleVolver = () => {
         navigation.goBack()
@@ -37,31 +41,26 @@ export default function ListaDenuncias({ navigation }) {
         </View>
         <DenunciasUsuarioBar/>
         <FlatList
-            data={data}
+            data={dataDenuncias}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.email});}}>
-                    <Text style={styles.datos}>{item.nombre}</Text>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('DatosDenunciante', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', descripcion: item.descripcion, descripcionDenunciado: item.descripcionDenunciado, estado: item.estado});}}>
                     <Text style={styles.datos}>{item.descripcion}</Text>
-                    <Text style={styles.datos}>{item.direccion}</Text>
-                    <Text style={styles.datos}>{item.telefono}</Text>
-                    <Text style={styles.datos}>{item.email}</Text>
+                    <Text style={styles.datos}>{item.descripcionDenunciado}</Text>
+                    <Text style={styles.datos}>{item.estado}</Text>
                 </TouchableOpacity>
             )}
-            keyExtractor={(item) => item.idPublicacion}
+            keyExtractor={(item) => item.idDenuncias}
         />
         <DenunciasContraBar/>
         <FlatList
-            data={data}
+            data={dataDenunciado}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('ComercioDatos', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', nombre: item.nombre, descripcion: item.descripcion, direccion: item.direccion, telefono: item.telefono, mail: item.email});}}>
-                    <Text style={styles.datos}>{item.nombre}</Text>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('DatosDenunciado', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', descripcion: item.descripcion, descripcionDenunciado: item.descripcionDenunciado});}}>
                     <Text style={styles.datos}>{item.descripcion}</Text>
-                    <Text style={styles.datos}>{item.direccion}</Text>
-                    <Text style={styles.datos}>{item.telefono}</Text>
-                    <Text style={styles.datos}>{item.email}</Text>
+                    <Text style={styles.datos}>{item.descripcionDenunciado}</Text>
                 </TouchableOpacity>
             )}
-            keyExtractor={(item) => item.idPublicacion}
+            keyExtractor={(item) => item.idDenuncias}
         />
         <Boton text='Volver al inicio' onPress={handleVolver}/>
       </View>
