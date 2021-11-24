@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpacity, Image } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { SafeAreaView, StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpacity, Image } from 'react-native';
+
+import {Picker} from '@react-native-picker/picker';
 
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,6 +11,8 @@ import { useNetInfo } from '@react-native-community/netinfo';
 
 export default function GenerarReclamo({ navigation }) {
 
+    const [selectedSitio, setSelectedSitio] = useState();
+    const [sitios, setSitios] = useState([]);
     const netInfo = useNetInfo();
 
     const [documento, setDocumento] = useState('');
@@ -20,14 +24,47 @@ export default function GenerarReclamo({ navigation }) {
 
     const [fileNames, setFileNames] = useState(null);
     const [files, setFiles] = useState(null);
-
+    
     useEffect(() => {
       getStorageItems();
+      //getSitios();
     }, []);
 
+    console.log(sitios)
     const getStorageItems = async () => {
       const documento = await loadData('documento');
       setDocumento(documento);
+
+      const sitios = await listarSitios();
+      setSitios(sitios)
+    }
+
+    const getSitios = async () => {
+      const sitios = await listarSitios();
+      console.log(sitios)
+      setSitios(sitios);
+    }
+
+    const listarSitios = async () => 
+    {
+      let url = 'http://192.168.42.1:8080/api/sitios';
+      try {
+          var myHeaders = new Headers();
+          myHeaders.append('pragma', 'no-cache');
+          myHeaders.append('cache-control', 'no-cache');
+
+          var requestOptions = {
+              method: 'GET',
+              mode: "cors",
+              headers: myHeaders,
+          };
+          let response = await fetch(url, requestOptions);
+          let data = await response.json();
+          return data.listarSitios;
+      }
+      catch (error) {
+          console.log("Error", error.message);
+      };
     }
 
     const storeData = async (key, value) => {
@@ -103,18 +140,20 @@ export default function GenerarReclamo({ navigation }) {
 
     return (
       <View style={styles.container}>
+        
         <ScrollView>
+          
           <Text style={styles.text}>Datos de su reclamo:</Text>
-          <TextInput
-              style={styles.input}            
-              placeholder="Dirección 1"
-              onChangeText={dir1 => setDir1(dir1)}
-          />
-          <TextInput
-              style={styles.input}            
-              placeholder="Dirección 2"
-              onChangeText={dir2 => setDir2(dir2)}
-          />
+          <Text style={styles.text}>Eliga un sitio</Text>
+          <Picker
+            selectedValue={selectedSitio}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedSitio(itemValue)
+            }>
+            {sitios.map(function(v, index){
+              return (<Picker.Item label={v.descripcion + ' - ' + v.calle + ' ' + v.numero} value={v.idSitio} key={v.idSitio}/>)
+            })}
+          </Picker>
           <TextInput
               style={styles.input}            
               placeholder="Tipo"
@@ -146,6 +185,15 @@ const styles = StyleSheet.create({
       alignItems: 'center', 
       justifyContent: 'center',
       backgroundColor: '#E0E0E0'
+    },
+    titleText: {
+      padding: 8,
+      fontSize: 16,
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
+    headingText: {
+      padding: 8,
     },
     text:{
         fontSize: 20,
