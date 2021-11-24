@@ -6,8 +6,11 @@ import * as ImagePicker from 'expo-image-picker';
 import Boton from '../../components/Boton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createDenuncia } from '../../Controllers/Denuncias.controller';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 export default function GenerarDenunciaComercio({ navigation }) {
+
+    const netInfo = useNetInfo();
 
     const [documento, setDocumento] = useState('');
     const [descripcionDenunciado, setDescripcionDenunciado] = useState('');
@@ -52,12 +55,17 @@ export default function GenerarDenunciaComercio({ navigation }) {
     }
 
     const handleCrearDenuncia= () => {
-      if(isChecked) {
-        crearDenuncia();
-        
+      if(netInfo.isWifiEnabled || netInfo.isConnected){
+        if(isChecked) {
+          crearDenuncia();
+          
+        }
+        else {
+          Alert.alert('Error', 'Debe aceptar los terminos', [{text: 'Aceptar'}]);
+        }
       }
-      else {
-        Alert.alert('Error', 'Debe aceptar los terminos', [{text: 'Aceptar'}]);
+      else{
+          Alert.alert('Error', 'Necesita una conexion a internet para generar una denuncia', [{text: 'Aceptar'}]);
       }
     }
 

@@ -3,10 +3,12 @@ import { StyleSheet, View, Text, TextInput, Switch, Button } from 'react-native'
 
 import Boton from '../../components/Boton';
 
-export default function EnviarRed({ navigation }) {
+export default function EnviarRed({ route, navigation }) {
+    
+    const { idReclamos } = route.params;
     
     const handleEnviarRed = () => {
-       navigation.navigate('DevolucionNro');
+       navigation.navigate('DevolucionNro', {idReclamos: idReclamos});
     }
 
     const handleGuardarLocal = () => {

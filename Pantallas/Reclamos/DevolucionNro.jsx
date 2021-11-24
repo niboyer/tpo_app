@@ -3,8 +3,10 @@ import { StyleSheet, View, Text, TextInput, Switch, Button } from 'react-native'
 
 import Boton from '../../components/Boton';
 
-export default function DevolucionNro({ navigation }) {
+export default function DevolucionNro({ route, navigation }) {
     
+    const { idReclamos } = route.params;
+
     const handleInicio = () => {
         navigation.navigate('HomeVecino');
      }
@@ -12,7 +14,7 @@ export default function DevolucionNro({ navigation }) {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Gracias por su cooperación.</Text>
-        <Text style={styles.numeroReclamo}>El número de su reclamo es X.</Text>
+        <Text style={styles.numeroReclamo}>El número de su reclamo es {idReclamos}</Text>
         <Text style={styles.extra}>Puede ver el estado de su reclamo a través de la aplicación y realizar un seguimiento del mismo con el número provisto.</Text>
         <Boton text='Volver al inicio' onPress={handleInicio}/>
       </View>

@@ -13,7 +13,9 @@ export default function DatosDenunciante({ item, route, navigation }) {
 
       return (
         <View style={styles.container}>
-          <ScrollView style={styles.ScrollView}>
+
+          <ScrollView>
+            
             <Text style={styles.titulo}>Denuncia contra: X</Text>
             <Text style={styles.text}>Lugar de la denuncia:</Text>
             <TextInput

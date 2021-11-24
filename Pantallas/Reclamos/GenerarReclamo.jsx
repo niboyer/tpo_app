@@ -101,12 +101,16 @@ export default function GenerarReclamo({ navigation }) {
       }
 
       let getRespuesta = await createReclamo(datos);
-      if(getRespuesta.rdo === 0){
+      if(getRespuesta.rdo === 200){
         if(netInfo.isWifiEnabled){
-          navigation.navigate('DevolucionNro');
+          navigation.navigate('DevolucionNro',{
+            idReclamos: getRespuesta.data.createdReclamo.idReclamos,
+          });
         }
         else if(netInfo.isConnected){
-          navigation.navigate('EnviarRed');
+          navigation.navigate('EnviarRed',{
+            idReclamos: getRespuesta.data.createdReclamo.idReclamos,
+          });
         }
         else{
           Alert.alert('Error', 'No se encontró conexión a internet para continuar', [{text: 'Aceptar'}]);

@@ -14,7 +14,7 @@ export default function DevolucionNroDenuncia({ route, navigation }) {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Su denuncia ha sido realizada.</Text>
-        <Text style={styles.numeroReclamo}>El número de su denuncia es {idDenuncias}.</Text>
+        <Text style={styles.numeroDenuncia}>El número de su denuncia es {idDenuncias}.</Text>
         <Text style={styles.extra}>Puede ver el estado de su denuncia a través de la aplicación y realizar un seguimiento de la misma con el número provisto.</Text>
         <Boton text='Volver al inicio' onPress={handleInicio}/>
       </View>
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         marginBottom: 65,
         fontWeight: 'bold',
     },
-    numeroReclamo: {
+    numeroDenuncia: {
         fontSize: 24,
         color: '#000000',
         marginBottom: 15,
