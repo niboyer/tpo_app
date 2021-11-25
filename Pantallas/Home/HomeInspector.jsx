@@ -63,7 +63,7 @@ export default function MainScreen({ navigation }) {
         navigation.navigate('ListaComercios');
     }
     const handleSalir = () => {
-        navigation.navigate('MainScreen');
+      navigation.navigate('ListaComercios');
     }
 
     return (

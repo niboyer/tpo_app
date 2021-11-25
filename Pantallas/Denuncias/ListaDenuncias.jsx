@@ -11,27 +11,25 @@ import { getDenunciasByID, getDenunciasByDocumento, getDenunciasByDocumentoDenun
 export default function ListaDenuncias({ navigation }) {
     
     const [documento, setdocumento] = useState('');
-
+    const [tipoUsuario, setTipoUsuario] = useState('');
     const [dataDenuncias, setDataDenuncias] = useState([]);
     const [dataDenunciado, setDataDenunciado] = useState([]);
     //const [id, setID] = useState('');
 
      useEffect(()=>{
         getStorageItems();
-        async function componentDidMount(){
-            let rdo = await getDenunciasByDocumento(documento);
-            let rdo1 = await getDenunciasByDocumentoDenunciado(documento);
-            setDataDenuncias(rdo);
-            setDataDenunciado(rdo1);
-            console.log(rdo)
-            console.log(rdo1)
-        }
-        componentDidMount();
     }, []);
 
     const getStorageItems = async () => {
-        const userData = await loadData('documento');
-        setdocumento(userData);
+        const documento = await loadData('documento');
+        const userData = await loadData('tipoUser');
+        setTipoUsuario(userData);
+        setdocumento(documento);
+
+        let rdo = await getDenunciasByDocumento(documento);
+        let rdo1 = await getDenunciasByDocumentoDenunciado(documento);
+        setDataDenuncias(rdo);
+        setDataDenunciado(rdo1);
     }
 
     const storeData = async (key, value) => {
@@ -56,7 +54,12 @@ export default function ListaDenuncias({ navigation }) {
       }
     
     const handleVolver = () => {
-        navigation.goBack()
+        if(tipoUsuario === 'vecino'){
+            navigation.navigate('HomeVecino');
+        }
+        else{
+            navigation.navigate('HomeInspector');
+        }
     }
 
     return (
@@ -76,25 +79,25 @@ export default function ListaDenuncias({ navigation }) {
             renderItem={({item}) => (
                 <TouchableOpacity style={styles.touchable} onPress={() => {
                     navigation.navigate('DatosDenunciante', {
-                        urlImagenes: item.urlImagenes ? item.urlImagenes : '',
+                        urlImagenes: item.denunciasExtendidas.length > 0 ? item.denunciasExtendidas[0].urlImagenes : '', 
                         sitioCalle: item.sitio.calle, 
                         sitioNumero: item.sitio.numero, 
                         sitioEntreCalleA: item.sitio.entreCalleA,
                         sitioEntreCalleB: item.sitio.entreCalleB,
                         sitioDescripcion: item.sitio.descripcion,
                         descripcion: item.descripcion, 
-                        descripcionDenunciado: item.descripcionDenunciado,
+                        descripcionDenunciado: item.denunciasExtendidas[0].descripcionDenunciado,
                         estado: item.estado,
-                        idDenuncia: item.idDenuncia
+                        idDenuncias: item.idDenuncias
                         });
                 }}>
-                    <Text style={styles.datos}>{item.descripcion}</Text>
-                    <Text style={styles.datos}>{item.descripcionDenunciado}</Text>
-                    <Text style={styles.datos}>{item.sitio.descripcion}</Text>
-                    <Text style={styles.datos}>{item.estado}</Text>
+                    <Text style={styles.datos}>Denuncia N°: {item.idDenuncias}</Text>
+                    <Text style={styles.datos}>Descripcion Denuncia: {item.descripcion}</Text>
+                    <Text style={styles.datos}>Descripcion denunciado: {item.denunciasExtendidas[0].descripcionDenunciado}</Text>
+                    <Text style={styles.datos}>Estado: {item.estado}</Text>
                 </TouchableOpacity>
             )}
-            keyExtractor={(item) => item.idDenuncias}
+            keyExtractor={(item) => item.idDenuncias.toString()}
         />
         <DenunciasContraBar/>
         <FlatList
@@ -102,23 +105,24 @@ export default function ListaDenuncias({ navigation }) {
             renderItem={({item}) => (
                 <TouchableOpacity style={styles.touchable} onPress={() => {
                     navigation.navigate('DatosDenunciado', {
-                        urlImagenes: item.urlImagenes ? item.urlImagenes : '',
+                        urlImagenes: item.denunciasExtendidas.length > 0 ? item.denunciasExtendidas[0].urlImagenes : '',
                         sitioCalle: item.sitio.calle, 
                         sitioNumero: item.sitio.numero, 
                         sitioEntreCalleA: item.sitio.entreCalleA,
                         sitioEntreCalleB: item.sitio.entreCalleB,
                         sitioDescripcion: item.sitio.descripcion,
                         descripcion: item.descripcion,
-                        descripcionDenunciado: item.descripcionDenunciado,
-                        idDenuncia: item.idDenuncia
+                        descripcionDenunciado: item.denunciasExtendidas[0].descripcionDenunciado,
+                        idDenuncias: item.idDenuncias
                     });
                 }}>
-                    <Text style={styles.datos}>{item.descripcion}</Text>
-                    <Text style={styles.datos}>{item.descripcionDenunciado}</Text>
-                    <Text style={styles.datos}>{item.sitio.descripcion}</Text>
+                    <Text style={styles.datos}>Denuncia N°: {item.idDenuncias}</Text>
+                    <Text style={styles.datos}>Descripcion Denuncia: {item.descripcion}</Text>
+                    <Text style={styles.datos}>Descripcion denunciado: {item.denunciasExtendidas[0].descripcionDenunciado}</Text>
+                    <Text style={styles.datos}>Estado: {item.estado}</Text>
                 </TouchableOpacity>
             )}
-            keyExtractor={(item) => item.idDenuncias}
+            keyExtractor={(item) => item.idDenuncias.toString()}
         />
         <Boton text='Volver al inicio' onPress={handleVolver}/>
       </View>

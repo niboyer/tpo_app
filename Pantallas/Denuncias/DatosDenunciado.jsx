@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpacity, Image } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,7 +17,7 @@ export default function DatosDenunciado({ item, route, navigation }) {
       sitioDescripcion,
       descripcion, 
       descripcionDenunciado, 
-      idDenuncia
+      idDenuncias
     } = route.params;
 
     const [nombre, setNombre] = useState('');
@@ -29,7 +29,7 @@ export default function DatosDenunciado({ item, route, navigation }) {
 
     useEffect(() => {
       async function componentDidMount(){
-        let rdo = await getMovimientosDenunciaByIdDenuncia(idDenuncia);
+        let rdo = await getMovimientosDenunciaByIdDenuncia(idDenuncias);
         setData(rdo);
       }
       getStorageItems();
@@ -73,7 +73,7 @@ export default function DatosDenunciado({ item, route, navigation }) {
       return (
         <View style={styles.container}>
           <ScrollView style={styles.ScrollView}>
-            <Text style={styles.titulo}>Denuncia N°: {idDenuncia}</Text>
+            <Text style={styles.titulo}>Denuncia N°: {idDenuncias}</Text>
             
             <Text style={styles.titulo}>Denuncia contra: {nombre} {apellido}</Text>
             
@@ -86,15 +86,10 @@ export default function DatosDenunciado({ item, route, navigation }) {
               </View>
             </View>
             
-            <View style={styles.datos}>
-              <Text style={styles.subtitulo}>Motivo de la denuncia:</Text>
-              <View style={styles.subdatos}>
-                <Text style={styles.text}>Descripcion: {descripcionDenunciado}</Text>
-              </View>
-            </View>
+           
 
             <View style={styles.datos}>
-              <Text style={styles.subtitulo}>Datos adicionales de la denuncia:</Text>
+              <Text style={styles.subtitulo}>Motivo de la denuncia:</Text>
               <View style={styles.subdatos}>
                 <Text style={styles.text}>Descripcion: {descripcion}</Text>
               </View>

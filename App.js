@@ -38,6 +38,8 @@ import GenerarDenunciaVecino from './Pantallas/Denuncias/GenerarDenunciaVecino';
 import DeclaracionJurada from './Pantallas/Denuncias/DeclaracionJurada';
 import DevolucionNroDenuncia from './Pantallas/Denuncias/DevolucionNroDenuncia';
 import ListaDenuncias from './Pantallas/Denuncias/ListaDenuncias';
+import DatosDenunciado from './Pantallas/Denuncias/DatosDenunciado';
+import DatosDenunciante from './Pantallas/Denuncias/DatosDenunciante';
 
 
 const Stack = createNativeStackNavigator();
@@ -70,9 +72,7 @@ export default function App() {
         <Stack.Screen name="GuardadoLocal" component={GuardadoLocal}/>
         <Stack.Screen name="ListaReclamos" component={ListaReclamos}/>
         <Stack.Screen name="ReclamoIndividual" component={ReclamoIndividual}/>
-        <Stack.Screen name="GenerarDenuncia" component={GenerarDenuncia}/>
         <Stack.Screen name="GenerarDenunciaComercio" component={GenerarDenunciaComercio}/>
-        <Stack.Screen name="GenerarDenunciaVecino" component={GenerarDenunciaVecino}/>
         <Stack.Screen name="ListaDenuncias" component={ListaDenuncias}/>        
         <Stack.Screen name="DeclaracionJurada" component={DeclaracionJurada}/>
         <Stack.Screen name="DevolucionNroDenuncia" component={DevolucionNroDenuncia}/>
@@ -81,6 +81,8 @@ export default function App() {
         <Stack.Screen name="ComercioDatos" component={ComercioDatos}/>
         <Stack.Screen name="ListaServicios" component={ListaServicios}/>
         <Stack.Screen name="ServicioDatos" component={ServicioDatos}/>
+        <Stack.Screen name="DatosDenunciado" component={DatosDenunciado}/>
+        <Stack.Screen name="DatosDenunciante" component={DatosDenunciante}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
