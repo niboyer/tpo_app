@@ -60,7 +60,7 @@ export default function MainScreen({ navigation }) {
     }
     
     const handleConsultarPromociones = () => {
-        navigation.navigate('ListaComercios');
+        navigation.navigate('ListaComerciosSinLogin');
     }
     const handleSalir = () => {
       navigation.navigate('ListaComercios');

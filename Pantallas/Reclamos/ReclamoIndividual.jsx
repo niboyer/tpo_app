@@ -73,18 +73,19 @@ export default function ReclamoIndividual({ item, route, navigation }) {
             
             <View style={styles.datos}>
               <Text style={styles.subtitulo}>Movimientos del reclamo: </Text>
-              <View style={styles.subdatos}>
+              
               {data.map(item => {
                 return( 
-                  <>
+                  <><View style={styles.subdatos}>
                     <Text style={styles.text}>Responsable: {item.responsable}</Text>
                     <Text style={styles.text}>Causa: {item.causa}</Text>
                     <Text style={styles.text}>Fecha: {item.fecha}</Text>  
                     <View style={styles.separator}></View>        
+                    </View>  
                   </>                               
                 );                  
               })}   
-              </View>  
+              
             </View>
             
 

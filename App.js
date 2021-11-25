@@ -23,8 +23,10 @@ import ReestablecerPassInsp from './Pantallas/Olvido inspector/ReestablecerPassI
 import PublicacionComercio from './Pantallas/Promociones/PublicacionComercio';
 import PublicacionServicio from './Pantallas/Promociones/PublicacionServicio';
 import ListaComercios from './Pantallas/Promociones/ListaComercios';
+import ListaComerciosSinLogin from './Pantallas/Promociones/ListaComerciosSinLogin';
 import ComercioDatos from './Pantallas/Promociones/ComercioDatos';
 import ListaServicios from './Pantallas/Promociones/ListaServicios';
+import ListaServiciosSinLogin from './Pantallas/Promociones/ListaServiciosSinLogin';
 import ServicioDatos from './Pantallas/Promociones/ServicioDatos';
 import GenerarReclamo from './Pantallas/Reclamos/GenerarReclamo';
 import EnviarRed from './Pantallas/Reclamos/EnviarRed';
@@ -48,16 +50,18 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="ListaComercios" component={ListaComercios}/>
-        <Stack.Screen name="MainScreen" component={MainScreen} />
-        <Stack.Screen name="ElegirLogin" component={ElegirLogin} />
-        <Stack.Screen name="VerificarDNI" component={VerificarDNI} />
+        <Stack.Screen name="ListaComercios" component={ListaComercios} options={{ title: 'PROMOCIONES' }}/>
+        <Stack.Screen name="ListaServicios" component={ListaServicios} options={{ title: 'PROMOCIONES' }}/>
+        <Stack.Screen name="ListaComerciosSinLogin" component={ListaComerciosSinLogin} options={{ title: 'COMERCIOS' }}/>
+        <Stack.Screen name="MainScreen" component={MainScreen} options={{ title: 'INICIO SESION' }}/>
+        <Stack.Screen name="ElegirLogin" component={ElegirLogin} options={{ title: 'ELEGIR LOGIN' }}/>
+        <Stack.Screen name="VerificarDNI" component={VerificarDNI} options={{ title: 'INGRESO DOCUMENTO' }}/>
         <Stack.Screen name="CrearClave" component={CrearClave} />
-        <Stack.Screen name="LoginVecino" component={LoginVecino} />
+        <Stack.Screen name="LoginVecino" component={LoginVecino} options={{ title: 'INICIO VECINO' }}/>
         <Stack.Screen name="OlvidoVecino" component={OlvidoVecino}/>
         <Stack.Screen name="PregVecino" component={PregVecino}/>
         <Stack.Screen name="ReestablecerPassVecino" component={ReestablecerPassVecino}/>
-        <Stack.Screen name="HomeVecino" component={HomeVecino} />
+        <Stack.Screen name="HomeVecino" component={HomeVecino} options={{ title: 'INICIO VECINO' }}/>
         <Stack.Screen name="LoginInspector" component={LoginInspector} />
         <Stack.Screen name="OlvidoInspector" component={OlvidoInspector}/>
         <Stack.Screen name="PregInspector" component={PregInspector}/>
@@ -78,8 +82,8 @@ export default function App() {
         <Stack.Screen name="DevolucionNroDenuncia" component={DevolucionNroDenuncia}/>
         <Stack.Screen name="PublicacionComercio" component={PublicacionComercio}/>
         <Stack.Screen name="PublicacionServicio" component={PublicacionServicio}/>
-        <Stack.Screen name="ComercioDatos" component={ComercioDatos}/>
-        <Stack.Screen name="ListaServicios" component={ListaServicios}/>
+        <Stack.Screen name="ComercioDatos" component={ComercioDatos}/>        
+        <Stack.Screen name="ListaServiciosSinLogin" component={ListaServiciosSinLogin} options={{ title: 'SERVICIOS' }}/>
         <Stack.Screen name="ServicioDatos" component={ServicioDatos}/>
         <Stack.Screen name="DatosDenunciado" component={DatosDenunciado}/>
         <Stack.Screen name="DatosDenunciante" component={DatosDenunciante}/>

@@ -6,38 +6,46 @@ import Boton from '../../components/Boton';
 import BotonPublicaciones from '../../components/BotonPublicaciones';
 import { getPublicacionesByTipo } from '../../Controllers/Publicaciones.controller';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 export default function ListaComercios({ navigation }) {
     
     const [data, setData] = useState([]);
+    const [tipoUsuario, setTipoUsuario] = useState('');
 
     useEffect(()=>{
-        async function componentDidMount(){
-            let rdo = await getPublicacionesByTipo('Comercio');
-            setData(rdo);
-            console.log(rdo)
-        }
-        componentDidMount();
+        getStorageItems();
     }, []);
 
+    const getStorageItems = async () => {
+        const userData = await loadData('tipoUser');
+        setTipoUsuario(userData);
+
+        let rdo = await getPublicacionesByTipo('Comercio');
+        setData(rdo);
+      }
+
+      const loadData = async (key) => {
+        const recuperado = await AsyncStorage.getItem(key);
+        return recuperado;
+      }
+
     const handleServicios = (key) => {
-        navigation.navigate('ListaServicios');
+        navigation.navigate('ListaServiciosSinLogin');
     }
 
     const handleSalir = () => {
-        navigation.goBack()
+        if(tipoUsuario === 'vecino'){
+            navigation.navigate('HomeVecino');
+        }
+        else{
+            navigation.navigate('HomeInspector');
+        }
     }
 
     return (
       <View style={styles.container}>
-        <View>
-            <Icon
-                raised
-                name='person-circle'
-                type='ionicon'
-                color='#000000'
-                onPress={() => navigation.navigate('MainScreen')}
-            />
-        </View>
         <Text style={styles.text}>Consulta de promociones</Text>
         <BotonPublicaciones text='Ver servicios' onPress={handleServicios}/>
         <FlatList
@@ -49,11 +57,12 @@ export default function ListaComercios({ navigation }) {
                     <Text style={styles.datos}>Direccion: {item.direccion}</Text>
                     <Text style={styles.datos}>Telefono: {item.telefono}</Text>
                     <Text style={styles.datos}>Email: {item.email}</Text>
+                    <Text style={styles.datos}>Estado: {item.estado}</Text>
                 </TouchableOpacity>
             )}
             keyExtractor={(item) => item.idPublicacion.toString()}
         />
-        {/*<Boton text='Volver al inicio' onPress={handleSalir}/>*/}
+        <Boton text='Volver al inicio' onPress={handleSalir}/>
       </View>
     );
 }
