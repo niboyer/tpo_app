@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -70,10 +70,10 @@ export default function MainScreen({ navigation }) {
       <View style={styles.container}>
         <Text style={styles.text}>Bienvenido Inspector {nombre} {apellido}</Text>
         <ReclamoBar/>
-        <MenuOpcion text='Generar Reclamo' onPress={handleGenerarReclamo}/>
+        {/*<MenuOpcion text='Generar Reclamo' onPress={handleGenerarReclamo}/>*/}
         <MenuOpcion text='Consultar Reclamo' onPress={handleConsultarReclamos}/>
         <DenunciasBar/>
-        <MenuOpcion text='Generar Denuncia' onPress={handleGenerarDenuncia}/>
+        {/*<MenuOpcion text='Generar Denuncia' onPress={handleGenerarDenuncia}/>*/}
         <MenuOpcion text='Consultar Denuncia' onPress={handleConsultarDenuncias}/>
         <PromocionBar/>
         <MenuOpcion text='Consulta de promociones' onPress={handleConsultarPromociones}/>

@@ -121,67 +121,48 @@ export default function ListaReclamos({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Reclamos existentes en el municipio</Text>
-            <View style={{
-                borderWidth: 2, 
-                borderColor: '#bdc3c7',
-                margin: 10,
-                borderRadius: 10,
-                padding: 7, 
-            }}>
-                <Text style={{
-                    fontSize: 15,
-                    color: '#000000',
-                    marginLeft: 5,
-                    marginBottom: 5,
-                }}>FILTROS</Text>
+        <Text style={styles.titulo}>Reclamos existentes</Text>
 
-                <View style={{
-                    flexDirection: "row",
-                    height: 40,
-                    padding: 0,
-                    borderRadius: 10, 
-                    borderWidth: 2, 
-                    borderColor: '#bdc3c7', 
-                    overflow: 'hidden',
-                    backgroundColor: '#C5CAE9'
-                }}
-                >     
-                    <Text style={{flex: 0.2, textAlign: 'center', alignSelf:'center'}}>Tipo:</Text>
-                    <Picker
-                        style={{
-                            flex: 1,
-                            color:'black',
-                        }}
-                        selectedValue={selectedDesperfecto}
-                        onValueChange={(itemValue, itemIndex) =>
-                         handleValueChange(itemValue)
-                        }>
-                        <Picker.Item label='Todos' value='0' />
-                        {desperfectos.map(function(v, index){
-                        return (<Picker.Item label={v.descripcion} value={v.idDesperfecto} key={v.idDesperfecto}/>)
-                        })}
-                    </Picker>
-                </View>
-                <View style={styles.busquedas}>            
-                    <View style={styles.checkboxContainer}>
-                        <CheckBox
-                            value={isPropio}
-                            onValueChange={handleCheckPropio}
-                            style={styles.checkbox}
-                        />
-                        <Text style={styles.label}>Propio</Text>
+        <View style={styles.datosFiltro}>
+            <Text style={styles.subtitulo}>FILTROS</Text>
+            <View style={styles.subdatos}>
+                <View style={styles.select}>     
+                        <Text style={{flex: 0.2, textAlign: 'center', alignSelf:'center', fontSize: 16}}>Tipo:</Text>
+                        <Picker
+                            style={{
+                                flex: 1,
+                                color:'black',
+                            }}
+                            selectedValue={selectedDesperfecto}
+                            onValueChange={(itemValue, itemIndex) =>
+                            handleValueChange(itemValue)
+                            }>
+                            <Picker.Item label='Todos' value='0' />
+                            {desperfectos.map(function(v, index){
+                                return (<Picker.Item label={v.descripcion} value={v.idDesperfecto} key={v.idDesperfecto}/>)
+                            })}
+                        </Picker>
                     </View>
-                    <View style={styles.checkboxContainer}>
-                        <CheckBox
-                            value={isGeneral}
-                            onValueChange={handleCheckGeneral}
-                            style={styles.checkbox}
-                        />
-                        <Text style={styles.label}>General</Text>
-                    </View>
-                </View>
-            </View>        
+                    <View style={styles.busquedas}>            
+                        <View style={styles.checkboxContainer}>
+                            <CheckBox
+                                value={isPropio}
+                                onValueChange={handleCheckPropio}
+                                style={styles.checkbox}
+                            />
+                            <Text style={styles.label}>Propio</Text>
+                        </View>
+                        <View style={styles.checkboxContainer}>
+                            <CheckBox
+                                value={isGeneral}
+                                onValueChange={handleCheckGeneral}
+                                style={styles.checkbox}
+                            />
+                            <Text style={styles.label}>General</Text>
+                        </View>
+                    </View>               
+            </View>
+        </View>        
         <FlatList
             data={data}
             renderItem={({item}) => (
@@ -217,6 +198,44 @@ const styles = StyleSheet.create({
     container:{
         flex: 1, 
         backgroundColor: '#E0E0E0',
+        padding: 10,
+    },
+    titulo: {
+        fontSize: 26,
+        color: '#FFFFFF',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        marginBottom: 20,
+        marginTop: 10,
+        padding: 10, 
+        backgroundColor: '#002171', 
+        borderWidth:1,
+        borderColor: 'white',
+        borderRadius: 10,
+        textAlign: 'center',
+    },
+    datosFiltro:{
+        borderWidth: 1,
+        borderColor: 'black',
+        borderTopRightRadius:10,
+        borderTopLeftRadius:10,
+        borderColor:'black',
+        marginBottom:10,
+    },
+    subtitulo: {
+        fontSize: 18,
+        marginBottom: 0,
+        marginTop: 0,
+        padding: 5, 
+        color: '#FFFFFF',
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        backgroundColor: '#5472D3', 
+        borderWidth:0,
+        borderColor: 'white',
+        borderTopRightRadius: 10,
+        borderTopLeftRadius: 10,
+        textAlign: 'left',
     },
     text:{
         fontSize: 18,
@@ -230,6 +249,19 @@ const styles = StyleSheet.create({
         color: '#000000',
         backgroundColor: '#C5CAE9',
         marginLeft: 10,
+    },
+    subdatos: {
+        padding: 10,
+    },
+    select: {
+        flexDirection: "row",
+        height: 40,
+        padding: 0,
+        borderRadius: 5, 
+        borderWidth: 2, 
+        borderColor: '#bdc3c7', 
+        overflow: 'hidden',
+        backgroundColor: '#C5CAE9'
     },
     touchable:{
         borderColor: '#000000',
