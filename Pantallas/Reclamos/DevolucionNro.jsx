@@ -3,12 +3,44 @@ import { StyleSheet, View, Text, TextInput, Switch, Button } from 'react-native'
 
 import Boton from '../../components/Boton';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function DevolucionNro({ route, navigation }) {
     
     const { idReclamos } = route.params;
 
+    const [tipoUsuario, setTipoUsuario] = useState('');
+
+    useEffect(() => {
+        getStorageItems();
+      }, []);
+  
+      const getStorageItems = async () => {
+        const userData = await loadData('tipoUser');
+        setTipoUsuario(userData);
+      }
+
+      const storeData = async (key, value) => {
+        try {
+          await AsyncStorage.setItem(key, value);
+        } catch (e) {
+          console.log(e.message)
+        }
+      }
+  
+      const loadData = async (key) => {
+        const recuperado = await AsyncStorage.getItem(key);
+        return recuperado;
+      }
+  
+
     const handleInicio = () => {
-        navigation.navigate('HomeVecino');
+        if(tipoUsuario === 'vecino'){
+            navigation.navigate('HomeVecino');
+        }
+        else{
+            navigation.navigate('HomeInspector');
+        }
      }
 
     return (

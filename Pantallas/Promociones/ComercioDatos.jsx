@@ -17,7 +17,7 @@ export default function DatosComercio({item, route, navigation }) {
 
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.ScrollView}>
+        <ScrollView style={styles.scrollView}>
           <Text style={styles.titulo}>Promoción Comercio</Text>
           <Text style={styles.text}>Nombre:</Text>
           <TextInput
@@ -71,9 +71,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       backgroundColor: '#E0E0E0'
     },
-    ScrollView:{
-      width: '80%',
-      margin: 10,
+    scrollView : {
+      width: '100%',
+      padding: 20,
     },
     text:{
         fontSize: 18,
