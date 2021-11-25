@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { StyleSheet, View, Text} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ReclamoBar from '../../components/ReclamoBar';
 import DenunciasBar from '../../components/DenunciasBar';
@@ -8,6 +9,55 @@ import MenuOpcion from '../../components/MenuOpcion';
 import BotonSalir from '../../components/BotonSalir';
 
 export default function MainScreen({ navigation }) {
+    
+    const [nombre, setNombre] = useState('');
+    const [apellido, setApellido] = useState('');
+
+    useEffect(() => {
+        getStorageItems();
+      }, []);
+  
+      const getStorageItems = async () => {
+        const nombre = await loadData('nombre');
+        setNombre(nombre);
+
+        const apellido = await loadData('apellido');
+        setApellido(apellido);
+      }
+  
+      const storeData = async (key, value) => {
+        try {
+          await AsyncStorage.setItem(key, value);
+        } catch (e) {
+          console.log(e.message)
+        }
+      }
+  
+      const loadData = async (key) => {
+        const recuperado = await AsyncStorage.getItem(key);
+        return recuperado;
+      }
+
+      const clearAll = async () => {
+        try {
+          await AsyncStorage.clear()
+        } catch(error) {
+          console.log(error);
+        }
+      }
+    
+    const handleGenerarReclamo = () => {
+        navigation.navigate('GenerarReclamo');
+    }
+    const handleConsultarReclamos = () => {
+        navigation.navigate('ListaReclamos');
+    }
+    const handleGenerarDenuncia = () => {
+        navigation.navigate('GenerarDenunciaComercio');
+    }
+    const handleConsultarDenuncias = () => {
+        navigation.navigate('ListaDenuncias');
+    }
     
     const handleConsultarPromociones = () => {
         navigation.navigate('ListaComercios');
@@ -18,13 +68,13 @@ export default function MainScreen({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Bienvenido Inspector</Text>
+        <Text style={styles.text}>Bienvenido Inspector {nombre} {apellido}</Text>
         <ReclamoBar/>
-        <MenuOpcion text='Generar Reclamo'/>
-        <MenuOpcion text='Consultar Reclamo'/>
+        <MenuOpcion text='Generar Reclamo' onPress={handleGenerarReclamo}/>
+        <MenuOpcion text='Consultar Reclamo' onPress={handleConsultarReclamos}/>
         <DenunciasBar/>
-        <MenuOpcion text='Generar Denuncia'/>
-        <MenuOpcion text='Consultar Denuncia'/>
+        <MenuOpcion text='Generar Denuncia' onPress={handleGenerarDenuncia}/>
+        <MenuOpcion text='Consultar Denuncia' onPress={handleConsultarDenuncias}/>
         <PromocionBar/>
         <MenuOpcion text='Consulta de promociones' onPress={handleConsultarPromociones}/>
         <BotonSalir text='Salir' onPress={handleSalir}/>

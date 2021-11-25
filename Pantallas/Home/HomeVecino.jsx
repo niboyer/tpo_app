@@ -53,7 +53,7 @@ export default function MainScreen({ navigation }) {
         navigation.navigate('ListaReclamos');
     }
     const handleGenerarDenuncia = () => {
-        navigation.navigate('GenerarDenuncia');
+        navigation.navigate('GenerarDenunciaComercio');
     }
     const handleConsultarDenuncias = () => {
       navigation.navigate('ListaDenuncias');

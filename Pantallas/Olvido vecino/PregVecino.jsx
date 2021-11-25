@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox } from 'react-native';
+import { StyleSheet, View, Text, TextInput, CheckBox, Alert } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Boton from '../../components/Boton';
 
@@ -7,14 +9,33 @@ export default function PregVecino({ navigation }) {
 
     const [respuesta, setRespuesta] = useState('');
 
+    const [pregUser, setPregUser] = useState('');
+    const [respUser, setRespUser] = useState('');
+
+    useEffect(() => {
+      getStorageItems();
+    }, []);
+
+    const getStorageItems = async () => {
+      const UserPregunta = await loadData('preguntaSecreta');
+      const UserResp = await loadData('respuestaSecreta');
+      setPregUser(UserPregunta);
+      setRespUser(respUser);
+    }
+
     const handleContinuar= () => {
-       navigation.navigate('ReestablecerPassVecino');
+      if(respuesta===respUser){
+        navigation.navigate('ReestablecerPassVecino');
+      }
+      else{
+        Alert.alert('Error', 'La respuesta no es correcta', [{text: 'Cerrar'}]);
+      }
     }
 
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Para verificar su identidad, responda la siguiente pregunta:</Text>
-        <Text style={styles.pregunta}>Pregunta de seguridad:</Text>
+        <Text style={styles.pregunta}>{pregUser}</Text>
         <TextInput
             style={styles.input}            
             placeholder="Respuesta"

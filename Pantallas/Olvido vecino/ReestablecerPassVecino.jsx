@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox } from 'react-native';
+import { StyleSheet, View, Text, TextInput, CheckBox, Alert } from 'react-native';
 
 import Boton from '../../components/Boton';
 
@@ -9,12 +9,19 @@ export default function ReestablecerPassVecino({ navigation }) {
     const [confirmar, setConfirmar] = useState('');
 
     const handleContinuar= () => {
-       navigation.navigate('LoginVecino');
+      if(clave === confirmar){
+        Alert.alert('Cambio realizado', 'Se modificó su clave exitosamente', [{text: 'Aceptar'}]);
+        navigation.navigate('LoginVecino');
+      }
+      else{
+        Alert.alert('Error', 'Las claves no coinciden entre si', [{text: 'Aceptar'}]);
+      }
+       
     }
 
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Reestablecer contraseña usuario</Text>
+        <Text style={styles.text}>Reestablecer clave usuario</Text>
         <TextInput
             style={styles.input}            
             placeholder="Clave de acceso"

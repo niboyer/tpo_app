@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox } from 'react-native';
+import { StyleSheet, View, Text, TextInput, CheckBox, Alert } from 'react-native';
 
 import Boton from '../../components/Boton';
 
@@ -9,7 +9,13 @@ export default function ReestablecerPassInspector({ navigation }) {
     const [confirmar, setConfirmar] = useState('');
 
     const handleContinuar= () => {
-       navigation.navigate('LoginInspector');
+      if(contraseña === confirmar){
+        Alert.alert('Cambio realizado', 'Se modificó su clave exitosamente', [{text: 'Aceptar'}]);
+        navigation.navigate('LoginInspector');
+      }
+      else{
+        Alert.alert('Error', 'Las claves no coinciden entre si', [{text: 'Aceptar'}]);
+      }
     }
 
     return (

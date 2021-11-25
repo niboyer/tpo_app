@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, TextInput, ScrollView, CheckBox, Alert} from 'r
 import Boton from '../../components/Boton';
 
 import {accesoInspector} from '../../Controllers/AccesoInspector.controller';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginInspector({ navigation }) {
 
@@ -11,6 +12,14 @@ export default function LoginInspector({ navigation }) {
     const [contraseña, setContraseña] = useState('');
 
     const [isSelected, setSelection] = useState(false);
+
+    const storeData = async (key, value) => {
+      try {
+        await AsyncStorage.setItem(key, value);
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
 
     const handleIngresar= () => {
       validarAccesoInspector();
@@ -25,13 +34,24 @@ export default function LoginInspector({ navigation }) {
       let getLogin = await accesoInspector(datos);
       if (getLogin.rdo === 200) {
           //setUsuarioValido(true);
-
           //guardar en storage los datos del usuario
-          console.log(getLogin.data.loginUser.token)
-          console.log(getLogin.data.loginUser.personal.nombre)
+        await storeData('token', getLogin.data.loginUser.token);
+        await storeData('nombre', getLogin.data.loginUser.personal.nombre);
+        await storeData('apellido', getLogin.data.loginUser.personal.apellido);
+          //console.log(getLogin.data.loginUser.token)
+          //console.log(getLogin.data.loginUser.personal.nombre)
           navigation.navigate('HomeInspector');
       }
+
       if (getLogin.rdo === 401) {
+        Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
+      }
+
+      if (getLogin.rdo === 404) {
+        Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
+      }
+
+      if (getLogin.rdo === 500) {
         Alert.alert('Error', getLogin.mensaje, [{text: 'Cerrar'}]);
       }
     }

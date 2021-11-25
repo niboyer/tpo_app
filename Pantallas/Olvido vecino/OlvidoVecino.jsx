@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import { StyleSheet, View, Text, TextInput, CheckBox } from 'react-native';
+import { StyleSheet, View, Text, TextInput, CheckBox, Alert } from 'react-native';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Boton from '../../components/Boton';
 
@@ -8,8 +10,27 @@ export default function OlvidoVecino({ navigation }) {
     const [dni, setDni] = useState('');
     const [email, setEmail] = useState('');
 
+    const [DniUser, setDniUser] = useState('');
+    const [EmailUser, setEmailUser] = useState('');
+
+    useEffect(() => {
+      getStorageItems();
+    }, []);
+
+    const getStorageItems = async () => {
+      const userDocumento = await loadData('documento');
+      const userEmail = await loadData('email');
+      setDniUser(userDocumento);
+      setEmailUser(userEmail);
+    }
+
     const handleContinuar= () => {
-       navigation.navigate('PregVecino');
+      if(dni === DniUser && email === EmailUser){
+        navigation.navigate('PregVecino');
+      }
+      else{
+        Alert.alert('Error', 'Datos inválidos', [{text: 'Cerrar'}]);
+      }
     }
 
     return (
