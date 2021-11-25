@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, FlatList, TouchableOpacity, TextInput, CheckBox} from 'react-native';
 
 import Boton from '../../components/Boton';
-import { getReclamosByDocumento, getReclamosByTipo } from '../../Controllers/Reclamos.controller';
+import { getReclamosByDocumento, getReclamosByDesperfectoAndDocumento } from '../../Controllers/Reclamos.controller';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from '@react-native-picker/picker';
 
@@ -10,7 +10,7 @@ export default function ListaReclamos({ navigation }) {
     
     const [documento, setDocumento] = useState('');
     const [data, setData] = useState([]);
-    const [selectedDesperfecto, setSelectedDesperfecto] = useState();
+    const [selectedDesperfecto, setSelectedDesperfecto] = useState(0);
     const [tipo, setTipo] = useState('');
     const [isPropio, setPropio] = useState(false);
     const [isGeneral, setGeneral] = useState(true);
@@ -23,6 +23,7 @@ export default function ListaReclamos({ navigation }) {
             setData(rdo);
         }
         componentDidMount();
+        console.log(data)
     }, []);
 
     const getStorageItems = async () => {
@@ -68,8 +69,13 @@ export default function ListaReclamos({ navigation }) {
         setPropio(true);
         setGeneral(false);
         async function componentDidMount(){
-            let rdo = await getReclamosByDocumento(documento);
-            setData(rdo);
+            if(selectedDesperfecto == '0'){
+                let rdo = await getReclamosByDocumento(documento);
+                setData(rdo);
+            } else {
+                let rdo = await getReclamosByDesperfectoAndDocumento(selectedDesperfecto, documento);
+                setData(rdo);
+            }
         }
         componentDidMount();
     }
@@ -78,10 +84,39 @@ export default function ListaReclamos({ navigation }) {
         setPropio(false);
         setGeneral(true);
         async function componentDidMount(){
-            let rdo = await getReclamosByDocumento('');
-            setData(rdo);
+            if(selectedDesperfecto == '0'){
+                let rdo = await getReclamosByDocumento('');
+                setData(rdo);
+            } else {
+                let rdo = await getReclamosByDesperfectoAndDocumento(selectedDesperfecto, '');
+                setData(rdo);
+            }
         }
         componentDidMount();
+    }
+
+    const handleValueChange = (itemValue) => {
+        setSelectedDesperfecto(itemValue);
+        
+        var value;
+        if(itemValue =='0')
+            value = ''
+        else   
+            value = itemValue
+
+        if(isPropio){
+            async function componentDidMount(){
+                let rdo = await getReclamosByDesperfectoAndDocumento(value, documento);
+                setData(rdo);
+            }
+            componentDidMount();
+        } else {
+            async function componentDidMount(){
+                let rdo = await getReclamosByDesperfectoAndDocumento(value, '');
+                setData(rdo);
+            }
+            componentDidMount();
+        }
     }
 
     return (
@@ -120,9 +155,9 @@ export default function ListaReclamos({ navigation }) {
                         }}
                         selectedValue={selectedDesperfecto}
                         onValueChange={(itemValue, itemIndex) =>
-                        setSelectedDesperfecto(itemValue)
+                         handleValueChange(itemValue)
                         }>
-                        <Picker.Item label='Seleccione una opcion...' value='0' />
+                        <Picker.Item label='Todos' value='0' />
                         {desperfectos.map(function(v, index){
                         return (<Picker.Item label={v.descripcion} value={v.idDesperfecto} key={v.idDesperfecto}/>)
                         })}
@@ -152,12 +187,16 @@ export default function ListaReclamos({ navigation }) {
             renderItem={({item}) => (
                 <TouchableOpacity style={styles.touchable} onPress={() => {
                         navigation.navigate('ReclamoIndividual', {
-                            urlImagenes: item.urlImagenes ? item.urlImagenes : '', 
-                            direccion1: item.direccion1, 
-                            direccion2: item.direccion2, 
-                            tipo: item.tipo, 
+                            urlImagenes: item.reclamosExtendidas.length > 0 ? item.reclamosExtendidas[0].urlImagenes : '', 
+                            sitioCalle: item.sitio.calle, 
+                            sitioNumero: item.sitio.numero, 
+                            sitioEntreCalleA: item.sitio.entreCalleA,
+                            sitioEntreCalleB: item.sitio.entreCalleB,
+                            sitioDescripcion: item.sitio.descripcion,
+                            desperfectoDescripcion: item.desperfecto.descripcion, 
                             descripcion: item.descripcion, 
-                            estado: item.estado
+                            estado: item.estado,
+                            idReclamo: item.idReclamo
                         });
                 }}>
                     <Text style={styles.datos}>Sitio: {item.sitio.descripcion}</Text>
@@ -167,7 +206,7 @@ export default function ListaReclamos({ navigation }) {
                     <Text style={styles.datos}>Estado: {item.estado}</Text>
                 </TouchableOpacity>
             )}
-            keyExtractor={(item) => item.idPublicacion}
+            keyExtractor={(item) => item.idReclamo.toString()}
         />
         <Boton text='Volver al inicio' onPress={handleVolver}/>
       </View>

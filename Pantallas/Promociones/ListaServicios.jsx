@@ -52,7 +52,7 @@ export default function ListaComercios({ navigation }) {
                     <Text style={styles.datos}>Descripción: {item.descripcion}</Text>
                 </TouchableOpacity>
             )}
-            keyExtractor={(item) => item.idPublicacion}
+            keyExtractor={(item) => item.idPublicacion.toString()}
         />
         <Boton text='Volver al inicio' onPress={handleSalir}/>
       </View>

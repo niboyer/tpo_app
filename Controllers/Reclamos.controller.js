@@ -29,8 +29,70 @@ export const getReclamosByDesperfecto = async function (desperfecto) {
     };
 }
 
+export const getReclamosByDesperfectoAndDocumento = async function (desperfecto, documento) {
+    let url = 'http://192.168.42.1:8080/api/reclamos/getReclamosByDesperfectoAndDocumento?idDesperfecto=' + desperfecto + '&documento=' + documento;
+    try {
+
+        var myHeaders = new Headers();
+        myHeaders.append('pragma', 'no-cache');
+        myHeaders.append('cache-control', 'no-cache');
+
+        var requestOptions = {
+            method: 'GET',
+            mode: "cors",
+            headers: myHeaders,
+        };
+
+        let response = await fetch(url, requestOptions);
+
+        if (response.status === 200) {
+            let data = await response.json();
+            let listaReclamos = data._reclamos;
+            return listaReclamos;
+        }
+        else {
+            let vacio = [];
+            return (vacio);
+        }
+    }
+    catch (error) {
+        console.log("Error", error);
+    };
+}
+
 export const getReclamosByDocumento = async function (documento) {
     let url = 'http://192.168.42.1:8080/api/reclamos/getReclamosByDocumento?documento=' + documento;
+    try {
+
+        var myHeaders = new Headers();
+        myHeaders.append('pragma', 'no-cache');
+        myHeaders.append('cache-control', 'no-cache');
+
+        var requestOptions = {
+            method: 'GET',
+            mode: "cors",
+            headers: myHeaders,
+        };
+
+        let response = await fetch(url, requestOptions);
+
+        if (response.status === 200) {
+            let data = await response.json();
+            let listaReclamos = data._reclamos;
+            return listaReclamos;
+        }
+        else {
+            let vacio = [];
+            return (vacio);
+        }
+    }
+    catch (error) {
+        console.log("Error", error);
+    };
+}
+
+export const getMovimientosReclamoByIdReclamo = async function (idReclamo) {
+    let url = 'http://192.168.42.1:8080/api/reclamos/getMovimientosByIdReclamo?idReclamo=' + idReclamo;
     try {
 
         var myHeaders = new Headers();
