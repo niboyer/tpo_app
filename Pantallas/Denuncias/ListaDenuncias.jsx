@@ -74,7 +74,20 @@ export default function ListaDenuncias({ navigation }) {
         <FlatList
             data={dataDenuncias}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('DatosDenunciante', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', descripcion: item.descripcion, descripcionDenunciado: item.descripcionDenunciado, SitioDesc: item.sitio.descripcion,estado: item.estado});}}>
+                <TouchableOpacity style={styles.touchable} onPress={() => {
+                    navigation.navigate('DatosDenunciante', {
+                        urlImagenes: item.urlImagenes ? item.urlImagenes : '',
+                        sitioCalle: item.sitio.calle, 
+                        sitioNumero: item.sitio.numero, 
+                        sitioEntreCalleA: item.sitio.entreCalleA,
+                        sitioEntreCalleB: item.sitio.entreCalleB,
+                        sitioDescripcion: item.sitio.descripcion,
+                        descripcion: item.descripcion, 
+                        descripcionDenunciado: item.descripcionDenunciado,
+                        estado: item.estado,
+                        idDenuncia: item.idDenuncia
+                        });
+                }}>
                     <Text style={styles.datos}>{item.descripcion}</Text>
                     <Text style={styles.datos}>{item.descripcionDenunciado}</Text>
                     <Text style={styles.datos}>{item.sitio.descripcion}</Text>
@@ -87,7 +100,19 @@ export default function ListaDenuncias({ navigation }) {
         <FlatList
             data={dataDenunciado}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('DatosDenunciado', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', descripcion: item.descripcion, descripcionDenunciado: item.descripcionDenunciado, SitioDesc: item.sitio.descripcion});}}>
+                <TouchableOpacity style={styles.touchable} onPress={() => {
+                    navigation.navigate('DatosDenunciado', {
+                        urlImagenes: item.urlImagenes ? item.urlImagenes : '',
+                        sitioCalle: item.sitio.calle, 
+                        sitioNumero: item.sitio.numero, 
+                        sitioEntreCalleA: item.sitio.entreCalleA,
+                        sitioEntreCalleB: item.sitio.entreCalleB,
+                        sitioDescripcion: item.sitio.descripcion,
+                        descripcion: item.descripcion,
+                        descripcionDenunciado: item.descripcionDenunciado,
+                        idDenuncia: item.idDenuncia
+                    });
+                }}>
                     <Text style={styles.datos}>{item.descripcion}</Text>
                     <Text style={styles.datos}>{item.descripcionDenunciado}</Text>
                     <Text style={styles.datos}>{item.sitio.descripcion}</Text>

@@ -164,7 +164,8 @@ export default function GenerarDenunciaComercio({ navigation }) {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollView}>
-          <Text style={styles.text}>Denuncia a realizar</Text>
+
+          <Text style={styles.text2}>Denuncia a realizar</Text>
           <Text style={styles.text}>Descripcion del denunciado:</Text>
           <TextInput
               style={styles.descripcion}            
@@ -229,12 +230,27 @@ const styles = StyleSheet.create({
       width: '100%',
       padding: 20,
     },
+    titleText: {
+      padding: 8,
+      fontSize: 16,
+      textAlign: 'center',
+      fontWeight: 'bold',
+    },
+    headingText: {
+      padding: 8,
+    },
     text:{
         fontSize: 20,
-        marginBottom: 10,
         color: '#000000',
         textAlign: 'center',
+        margin:10
     },
+    text2:{
+      fontSize: 25,
+      margin: 10,
+      color: '#000000',
+      textAlign: 'center',
+  },
     input: {
         width: '80%',
         height: 40,
@@ -246,9 +262,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'black',
         alignSelf: 'center',
-    },
-    checkbox: {
-      margin: 8,
     },
     descripcion:{
       width: '80%',
