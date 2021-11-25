@@ -60,6 +60,37 @@ export const getDenunciasByDocumento = async function (documento) {
     };
 }
 
+export const getDenunciasByDocumentoDenunciado = async function (documento) {
+    let url = 'http://192.168.42.1:8080/api/denuncias/getDenunciasByDocumentoDenunciado?documento=' + documento;
+    try {
+
+        var myHeaders = new Headers();
+        myHeaders.append('pragma', 'no-cache');
+        myHeaders.append('cache-control', 'no-cache');
+
+        var requestOptions = {
+            method: 'GET',
+            mode: "cors",
+            headers: myHeaders,
+        };
+
+        let response = await fetch(url, requestOptions);
+
+        if (response.status === 200) {
+            let data = await response.json();
+            let listaDenuncias = data._denuncias;
+            return listaDenuncias;
+        }
+        else {
+            let vacio = [];
+            return (vacio);
+        }
+    }
+    catch (error) {
+        console.log("Error", error);
+    };
+}
+
 export const createDenuncia = async function (denuncia) {
     let url = 'http://192.168.42.1:8080/api/denuncias/createDenuncia';
 

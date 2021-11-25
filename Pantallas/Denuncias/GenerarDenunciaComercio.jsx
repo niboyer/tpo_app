@@ -58,7 +58,6 @@ export default function GenerarDenunciaComercio({ navigation }) {
       if(netInfo.isWifiEnabled || netInfo.isConnected){
         if(isChecked) {
           crearDenuncia();
-          
         }
         else {
           Alert.alert('Error', 'Debe aceptar los terminos', [{text: 'Aceptar'}]);
@@ -132,11 +131,11 @@ export default function GenerarDenunciaComercio({ navigation }) {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.text}>Denuncia contra: Comercio</Text>
-          <Text style={styles.text}>Descripcion del comercio:</Text>
+          <Text style={styles.text}>Denuncia a realizar</Text>
+          <Text style={styles.text}>Descripcion del denunciado:</Text>
           <TextInput
               style={styles.descripcion}            
-              placeholder="Descripcion del comercio"
+              placeholder="Descripcion del denunciado"
               onChangeText={descripcionDenunciado => setDescripcionDenunciado(descripcionDenunciado)}
           />
           <TextInput

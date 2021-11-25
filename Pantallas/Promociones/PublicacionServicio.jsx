@@ -67,7 +67,8 @@ export default function PublicacionServicio({ navigation }) {
               onChangeText={nombre => setNombre(nombre)}
           />
           <TextInput
-              style={styles.input}            
+              style={styles.input}
+              keyboardType = 'numeric'             
               placeholder="Horarios"
               onChangeText={horario => setHorario(horario)}
           />
@@ -77,12 +78,14 @@ export default function PublicacionServicio({ navigation }) {
               onChangeText={rubro => setRubro(rubro)}
           />
           <TextInput
-              style={styles.input}            
+              style={styles.input}
+              keyboardType = 'numeric'            
               placeholder="Teléfono"
               onChangeText={telefono => setTelefono(telefono)}
           />
           <TextInput
-              style={styles.input}            
+              style={styles.input}
+              keyboardType = 'email-address'            
               placeholder="Email"
               onChangeText={email => setEmail(email)}
           />

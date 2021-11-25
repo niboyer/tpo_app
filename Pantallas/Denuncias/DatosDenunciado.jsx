@@ -5,7 +5,7 @@ import Boton from '../../components/Boton';
 
 export default function DatosDenunciado({ item, route, navigation }) {
 
-    const {dir1, dir2, motivo, descripcion} = route.params;
+    const {descripcion, descripcionDenunciado, idSitio} = route.params;
 
     const handleVolver= () => {
         navigation.goBack()
@@ -17,21 +17,10 @@ export default function DatosDenunciado({ item, route, navigation }) {
           <ScrollView>
             
             <Text style={styles.titulo}>Denuncia contra: X</Text>
-            <Text style={styles.text}>Lugar de la denuncia:</Text>
-            <TextInput
-                style={styles.input}            
-                value={dir1}
-                editable={false}
-            />
-            <TextInput
-                style={styles.input}      
-                value={dir2}
-                editable={false}
-            />
             <Text style={styles.text}>Motivo de la denuncia:</Text>
             <TextInput
-                style={styles.input}      
-                value={tipo}
+                style={styles.descripcion}      
+                value={descripcionDenunciado}
                 editable={false}
                 multiline={true}
             />
@@ -39,6 +28,13 @@ export default function DatosDenunciado({ item, route, navigation }) {
             <TextInput
                 style={styles.descripcion}        
                 value={descripcion}
+                editable={false}
+                multiline={true}
+            />
+            <Text style={styles.text}>Sitio de la denuncia:</Text>
+            <TextInput
+                style={styles.input}        
+                value={idSitio}
                 editable={false}
                 multiline={true}
             />

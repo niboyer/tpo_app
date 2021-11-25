@@ -68,7 +68,7 @@ export default function PublicacionComercio({ navigation }) {
         <ScrollView>
           <Text style={styles.text}>Datos de su publicación:</Text>
           <TextInput
-              style={styles.input}            
+              style={styles.input}        
               placeholder="Nombre"
               onChangeText={nombre => setNombre(nombre)}
           />
@@ -84,17 +84,20 @@ export default function PublicacionComercio({ navigation }) {
               onChangeText={direccion => setDireccion(direccion)}
           />
           <TextInput
-              style={styles.input}            
+              style={styles.input}
+              keyboardType = 'numeric'           
               placeholder="Horario"
               onChangeText={horario => setHorario(horario)}
           />
           <TextInput
-              style={styles.input}            
+              style={styles.input}  
+              keyboardType = 'numeric'          
               placeholder="Teléfono"
               onChangeText={telefono => setTelefono(telefono)}
           />
           <TextInput
-              style={styles.input}            
+              style={styles.input}
+              keyboardType = 'email-address'
               placeholder="Email"
               onChangeText={email => setEmail(email)}
           />
