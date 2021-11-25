@@ -61,19 +61,20 @@ export const getReclamosByDocumento = async function (documento) {
 }
 
 export const createReclamo = async function (reclamo) {
+
+    console.log(reclamo)
+
     let url = 'http://192.168.42.1:8080/api/reclamos/createReclamo';
 
     const formData = new FormData();
-    formData.append("direccion1", reclamo.direccion1);
-    formData.append("direccion2", reclamo.direccion2);
-    formData.append("tipo", reclamo.tipo);
+    formData.append("idSitio", reclamo.idSitio);
+    formData.append("idDesperfecto", reclamo.idDesperfecto);
     formData.append("descripcion", reclamo.descripcion);
-    formData.append("documento", reclamo.documento);
-    
+    formData.append("documento", reclamo.documento);    
 
     formData.append('files', {  
-        uri: denuncia.archivoImagenes,
-        name: denuncia.nombreImagenes,
+        uri: reclamo.archivoImagenes,
+        name: reclamo.nombreImagenes,
         type: 'image/jpg'
       })
       
@@ -99,8 +100,11 @@ export const createReclamo = async function (reclamo) {
         });
 
         let rdo = response.status;
+
+        console.log(rdo)
+
         let data = await response.json();
-        
+
         return ({rdo: rdo, mensaje: data.message, data: data});      
     }
     catch (error) {
