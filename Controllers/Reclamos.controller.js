@@ -1,5 +1,5 @@
-export const getReclamosByTipo = async function (tipo) {
-    let url = 'http://192.168.42.1:8080/api/reclamos/getReclamosByTipo?tipo=' + tipo;
+export const getReclamosByDesperfecto = async function (desperfecto) {
+    let url = 'http://192.168.42.1:8080/api/reclamos/getReclamosByDesperfecto?idDesperfecto=' + desperfecto;
     try {
 
         var myHeaders = new Headers();
