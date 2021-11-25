@@ -38,7 +38,10 @@ export default function LoginInspector({ navigation }) {
         await storeData('token', getLogin.data.loginUser.token);
         await storeData('nombre', getLogin.data.loginUser.personal.nombre);
         await storeData('apellido', getLogin.data.loginUser.personal.apellido);
-          //console.log(getLogin.data.loginUser.token)
+        
+        await storeData('tipoUser', 'inspector');
+
+        //console.log(getLogin.data.loginUser.token)
           //console.log(getLogin.data.loginUser.personal.nombre)
           navigation.navigate('HomeInspector');
       }

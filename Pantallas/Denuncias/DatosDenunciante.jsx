@@ -5,7 +5,7 @@ import Boton from '../../components/Boton';
 
 export default function DatosDenunciante({ item, route, navigation }) {
 
-    const {descripcion, descripcionDenunciado, idSitio, estado} = route.params;
+    const {descripcion, descripcionDenunciado, SitioDesc, estado} = route.params;
 
     const handleVolver= () => {
         navigation.goBack()
@@ -14,7 +14,7 @@ export default function DatosDenunciante({ item, route, navigation }) {
       return (
         <View style={styles.container}>
 
-          <ScrollView>
+          <ScrollView style={styles.scrollView}>
             
             <Text style={styles.titulo}>Denuncia contra: X</Text>
             <Text style={styles.text}>Motivo de la denuncia:</Text>
@@ -34,7 +34,7 @@ export default function DatosDenunciante({ item, route, navigation }) {
             <Text style={styles.text}>Sitio de la denuncia:</Text>
             <TextInput
                 style={styles.input}        
-                value={idSitio}
+                value={SitioDesc}
                 editable={false}
                 multiline={true}
             />
@@ -57,6 +57,10 @@ const styles = StyleSheet.create({
       alignItems: 'center', 
       justifyContent: 'center',
       backgroundColor: '#E0E0E0'
+    },
+    scrollView : {
+      width: '100%',
+      padding: 20,
     },
     text:{
         fontSize: 20,

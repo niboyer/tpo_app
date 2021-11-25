@@ -14,13 +14,13 @@ export default function ListaDenuncias({ navigation }) {
 
     const [dataDenuncias, setDataDenuncias] = useState([]);
     const [dataDenunciado, setDataDenunciado] = useState([]);
-    const [id, setID] = useState('');
+    //const [id, setID] = useState('');
 
      useEffect(()=>{
         getStorageItems();
         async function componentDidMount(){
             let rdo = await getDenunciasByDocumento(documento);
-            let rdo1 = await getDenunciasByDocumentoDenunciado('123456789');
+            let rdo1 = await getDenunciasByDocumentoDenunciado(documento);
             setDataDenuncias(rdo);
             setDataDenunciado(rdo1);
             console.log(rdo)
@@ -62,22 +62,22 @@ export default function ListaDenuncias({ navigation }) {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Denuncias referentes al usuario</Text>
-        <View style={styles.busquedas}>
+        {/* <View style={styles.busquedas}>
             <Text style={styles.text}>ID:</Text>
             <TextInput
                     style={styles.input}
                     placeholder="ID de la denuncia"
                     onChangeText={id => setID(id)}
             />
-        </View>
+        </View> */}
         <DenunciasUsuarioBar/>
         <FlatList
             data={dataDenuncias}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('DatosDenunciante', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', descripcion: item.descripcion, descripcionDenunciado: item.descripcionDenunciado, idSitio: item.idSitio,estado: item.estado});}}>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('DatosDenunciante', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', descripcion: item.descripcion, descripcionDenunciado: item.descripcionDenunciado, SitioDesc: item.sitio.descripcion,estado: item.estado});}}>
                     <Text style={styles.datos}>{item.descripcion}</Text>
                     <Text style={styles.datos}>{item.descripcionDenunciado}</Text>
-                    <Text style={styles.datos}>{item.idSitio}</Text>
+                    <Text style={styles.datos}>{item.sitio.descripcion}</Text>
                     <Text style={styles.datos}>{item.estado}</Text>
                 </TouchableOpacity>
             )}
@@ -87,10 +87,10 @@ export default function ListaDenuncias({ navigation }) {
         <FlatList
             data={dataDenunciado}
             renderItem={({item}) => (
-                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('DatosDenunciado', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', descripcion: item.descripcion, descripcionDenunciado: item.descripcionDenunciado, idSitio: item.idSitio});}}>
+                <TouchableOpacity style={styles.touchable} onPress={() => {navigation.navigate('DatosDenunciado', {urlImagenes: item.urlImagenes ? item.urlImagenes : '', descripcion: item.descripcion, descripcionDenunciado: item.descripcionDenunciado, SitioDesc: item.sitio.descripcion});}}>
                     <Text style={styles.datos}>{item.descripcion}</Text>
                     <Text style={styles.datos}>{item.descripcionDenunciado}</Text>
-                    <Text style={styles.datos}>{item.idSitio}</Text>
+                    <Text style={styles.datos}>{item.sitio.descripcion}</Text>
                 </TouchableOpacity>
             )}
             keyExtractor={(item) => item.idDenuncias}

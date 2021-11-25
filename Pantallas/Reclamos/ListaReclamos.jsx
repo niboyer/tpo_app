@@ -153,11 +153,13 @@ export default function ListaReclamos({ navigation }) {
                 <TouchableOpacity style={styles.touchable} onPress={() => {
                         navigation.navigate('ReclamoIndividual', {
                             urlImagenes: item.urlImagenes ? item.urlImagenes : '', 
-                            direccion1: item.direccion1, 
-                            direccion2: item.direccion2, 
-                            tipo: item.tipo, 
+                            id: item.idReclamo,
+                            sitio: item.sitio.descripcion,
+                            tipo: item.desperfecto.descripcion, 
                             descripcion: item.descripcion, 
-                            estado: item.estado
+                            estado: item.estado,
+                            calle1: item.sitio.entreCalleA,
+                            calle2: item.sitio.entreCalleB,
                         });
                 }}>
                     <Text style={styles.datos}>Sitio: {item.sitio.descripcion}</Text>

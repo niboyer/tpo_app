@@ -5,7 +5,7 @@ import Boton from '../../components/Boton';
 
 export default function ReclamoIndividual({ item, route, navigation }) {
 
-    const {dir1, dir2, tipo, descripcion, estado} = route.params;
+    const {id, sitio, tipo, descripcion, estado, calle1, calle2} = route.params;
 
     const handleVolver= () => {
         navigation.goBack()
@@ -13,17 +13,23 @@ export default function ReclamoIndividual({ item, route, navigation }) {
 
       return (
         <View style={styles.container}>
-          <ScrollView style={styles.ScrollView}>
-            <Text style={styles.titulo}>ID Reclamo: x</Text>
-            <Text style={styles.text}>Dirección:</Text>
-            <TextInput
-                style={styles.input}            
-                value={dir1}
-                editable={false}
-            />
+          <ScrollView style={styles.scrollView}>
+            <Text style={styles.titulo}>ID Reclamo: {id}</Text>
+            <Text style={styles.text}>Sitio:</Text>
             <TextInput
                 style={styles.input}      
-                value={dir2}
+                value={sitio}
+                editable={false}
+            />
+            <Text style={styles.text}>Calle 1:</Text>
+            <TextInput
+                style={styles.input}      
+                value={calle1}
+                editable={false}
+            /><Text style={styles.text}>Calle 2:</Text>
+            <TextInput
+                style={styles.input}      
+                value={calle2}
                 editable={false}
             />
             <Text style={styles.text}>Tipo:</Text>
@@ -58,6 +64,10 @@ const styles = StyleSheet.create({
       alignItems: 'center', 
       justifyContent: 'center',
       backgroundColor: '#E0E0E0'
+    },
+    scrollView : {
+      width: '100%',
+      padding: 20,
     },
     text:{
         fontSize: 20,

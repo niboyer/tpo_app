@@ -53,6 +53,8 @@ export default function LoginVecino({ navigation }) {
         await storeData('preguntaSecreta', getLogin.data.loginUser.user.preguntaSecreta);
         await storeData('respuestaSecreta', getLogin.data.loginUser.user.respuestaSecreta);
         await storeData('email', getLogin.data.loginUser.user.email);
+
+        await storeData('tipoUser', 'vecino');
           //console.log(getLogin.data.loginUser.token)
           //console.log(getLogin.data.loginUser.user.nombre)
           navigation.navigate('HomeVecino');

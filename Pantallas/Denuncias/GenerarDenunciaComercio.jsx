@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { StyleSheet, View, Text, TextInput, CheckBox, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
 import Checkbox from 'expo-checkbox';
 
+import {Picker} from '@react-native-picker/picker';
+
 import * as ImagePicker from 'expo-image-picker';
 import Boton from '../../components/Boton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,11 +14,11 @@ export default function GenerarDenunciaComercio({ navigation }) {
 
     const netInfo = useNetInfo();
 
+    const [selectedSitio, setSelectedSitio] = useState();
+    const [sitios, setSitios] = useState([]);
+
     const [documento, setDocumento] = useState('');
     const [descripcionDenunciado, setDescripcionDenunciado] = useState('');
-    const [dir1, setDir1] = useState('');
-    const [dir2, setDir2] = useState('');
-    const [motivo, setMotivo] = useState('');
     const [descripcion, setDescripcion] = useState('');
 
     const [fileNames, setFileNames] = useState(null);
@@ -31,6 +33,31 @@ export default function GenerarDenunciaComercio({ navigation }) {
     const getStorageItems = async () => {
       const documento = await loadData('documento');
       setDocumento(documento);
+
+      const sitios = await listarSitios();
+      setSitios(sitios)
+    }
+
+    const listarSitios = async () => 
+    {
+      let url = 'http://192.168.42.1:8080/api/sitios';
+      try {
+          var myHeaders = new Headers();
+          myHeaders.append('pragma', 'no-cache');
+          myHeaders.append('cache-control', 'no-cache');
+
+          var requestOptions = {
+              method: 'GET',
+              mode: "cors",
+              headers: myHeaders,
+          };
+          let response = await fetch(url, requestOptions);
+          let data = await response.json();
+          return data.listarSitios;
+      }
+      catch (error) {
+          console.log("Error", error.message);
+      };
     }
 
     const storeData = async (key, value) => {
@@ -55,23 +82,29 @@ export default function GenerarDenunciaComercio({ navigation }) {
     }
 
     const handleCrearDenuncia= () => {
-      if(netInfo.isWifiEnabled || netInfo.isConnected){
-        if(isChecked) {
-          crearDenuncia();
-        }
-        else {
-          Alert.alert('Error', 'Debe aceptar los terminos', [{text: 'Aceptar'}]);
-        }
+
+      if(selectedSitio=="0") {
+        Alert.alert('Aviso', "Debe Completar Sitio", [{text: 'Aceptar'}]);
       }
-      else{
-          Alert.alert('Error', 'Necesita una conexion a internet para generar una denuncia', [{text: 'Aceptar'}]);
+      else {
+        if(netInfo.isWifiEnabled || netInfo.isConnected){
+          if(isChecked) {
+            crearDenuncia();
+          }
+          else {
+            Alert.alert('Error', 'Debe aceptar los terminos', [{text: 'Aceptar'}]);
+          }
+        }
+        else{
+            Alert.alert('Error', 'Necesita una conexion a internet para generar una denuncia', [{text: 'Aceptar'}]);
+        }
       }
     }
 
     const crearDenuncia = async function () {
       let datos = {
         documento: documento,        
-        idSitio: 3,
+        idSitio: selectedSitio,
         descripcion: descripcion,
         aceptaResponsabilidad: 1,
         descripcionDenunciado: descripcionDenunciado,
@@ -130,7 +163,7 @@ export default function GenerarDenunciaComercio({ navigation }) {
 
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView style={styles.scrollView}>
           <Text style={styles.text}>Denuncia a realizar</Text>
           <Text style={styles.text}>Descripcion del denunciado:</Text>
           <TextInput
@@ -138,16 +171,31 @@ export default function GenerarDenunciaComercio({ navigation }) {
               placeholder="Descripcion del denunciado"
               onChangeText={descripcionDenunciado => setDescripcionDenunciado(descripcionDenunciado)}
           />
-          <TextInput
-              style={styles.input}            
-              placeholder="Dirección 1"
-              onChangeText={dir1 => setDir1(dir1)}
-          />
-          <TextInput
-              style={styles.input}            
-              placeholder="Dirección 2"
-              onChangeText={dir2 => setDir2(dir2)}
-          />
+          <Text style={styles.text}>Eliga un sitio:</Text>
+          <View style={{
+              flexDirection: "row",
+              height: 40,
+              padding: 0,
+              borderRadius: 10, 
+              borderWidth: 2, 
+              borderColor: '#bdc3c7', 
+              overflow: 'hidden',
+              backgroundColor: 'grey'
+            }}
+          >            
+            <Picker
+              style={styles.pickerStyles}
+              selectedValue={selectedSitio}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedSitio(itemValue)                
+              }>
+              <Picker.Item label='Seleccione una opcion...' value='0' />
+              {sitios.map(function(v, index){
+                return (<Picker.Item label={v.descripcion + ' - ' + v.calle + ' ' + v.numero} value={v.idSitio} key={v.idSitio}/>)
+              })}
+            </Picker>
+          </View>
+
           <Text style={styles.text}>Descripcion de su denuncia</Text>
           <TextInput
               style={styles.descripcion}            
@@ -176,6 +224,10 @@ const styles = StyleSheet.create({
       alignItems: 'center', 
       justifyContent: 'center',
       backgroundColor: '#E0E0E0'
+    },
+    scrollView : {
+      width: '100%',
+      padding: 20,
     },
     text:{
         fontSize: 20,
@@ -226,5 +278,9 @@ const styles = StyleSheet.create({
         marginBottom: 50,
         color: '#FFFFFF',
         textDecorationLine: 'underline',
-    }
+    },
+    pickerStyles:{
+      width:'100%',
+      color:'white',
+    },
 });
